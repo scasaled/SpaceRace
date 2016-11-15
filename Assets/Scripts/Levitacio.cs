@@ -3,17 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Levitacio : MonoBehaviour {
-    
+
+    public float separacio;
+    public float gravetat;
+    public float dampFactor;
+
     private Rigidbody rb;
     private BoxCollider bc;
-    private Vector3 idealPos;
-    public float separacio;
+    private float ratioSeparacio;
+    private float F;
+    private float rigidesa;
+    private float damp;
+    
 
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody>();
         bc = GetComponent<BoxCollider>();
-        idealPos = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -37,23 +43,22 @@ public class Levitacio : MonoBehaviour {
             RaycastHit hit;
             if (Physics.Raycast(rayPoints[i], -transform.up, out hit, 100.0f))
             {
-                idealPos = transform.position + ((separacio - hit.distance) * transform.up);
-                Vector3 F = (idealPos - transform.position);
-                rb.AddForceAtPosition(F*15,rayPoints[i]);
+                ratioSeparacio = ((separacio - hit.distance) / separacio);
+                if (gravetat != 0) rigidesa = rb.mass * gravetat / rayPoints.Count;
+                else rigidesa = rb.mass * 980 / rayPoints.Count;                                //Valor per defecte
+                if (dampFactor != 0) damp = rigidesa / dampFactor;
+                else damp = rigidesa / 1000.0f;                                                 //Valor per defecte
+                F = rigidesa * ratioSeparacio - damp * rb.GetPointVelocity(rayPoints[i]).y;
+                rb.AddForceAtPosition(F*transform.up,rayPoints[i]);
 
                 Debug.DrawLine(rayPoints[i], hit.point);
 
-                //mantenim la nau verticalment al terra
-                /*Quaternion rot = transform.rotation;
-                if (transform.up != hit.normal.normalized)
-                {
-                    Vector3 x = Vector3.Cross(transform.up, hit.normal.normalized);
-                    float theta = Mathf.Asin(x.magnitude);
-                    Vector3 w = x.normalized * theta / Time.fixedDeltaTime;
-                    Quaternion q = transform.rotation * rb.inertiaTensorRotation;
-                    Vector3 T = q * Vector3.Scale(rb.inertiaTensor, (Quaternion.Inverse(q) * w));
-                    rb.AddTorque(T);
-                }*/
+
+                //Versio anterior
+
+                /*idealPos = transform.position + ((separacio - hit.distance) * transform.up);
+                Vector3 F = (idealPos - transform.position);
+                rb.AddForceAtPosition(F * 15, rayPoints[i]);*/
             }
         }
     }
