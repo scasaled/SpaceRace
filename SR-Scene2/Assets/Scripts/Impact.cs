@@ -6,6 +6,8 @@ public class Impact : MonoBehaviour
     public GameObject explosion;
     public AudioClip sound;
 
+    public string tagEnemy;
+
     private ParticleSystem ps;
 
     // Use this for initialization
@@ -14,33 +16,23 @@ public class Impact : MonoBehaviour
         ps = explosion.GetComponent<ParticleSystem>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnTriggerEnter(Collider other)
     {
-        // TODO: get type of shoot, and update it depending of type
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        
-        print(collision.gameObject.tag.ToString());
-        // TODO: Destroy collision.object if life < 0
-        //Destroy(collision.gameObject.transform.parent.gameObject, obj.duration);
-
-
-        GameObject obj = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
-        Destroy(obj, ps.duration);
-        AudioSource.PlayClipAtPoint(sound, transform.position, 1f);
-        Destroy(gameObject);
-
-        // TODO: change vars of object (if gameObject type is a ship)
-        if (collision.gameObject.tag == "Player")
+        if (other.tag == tagEnemy)
         {
-            //collision.gameObject.GetComponent<Ship>().life--;
-        }
-        else
-        {
-        }
+            GameObject obj = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
+            AudioSource.PlayClipAtPoint(sound, transform.position, 1f);
+            Destroy(obj, ps.duration);
+            Destroy(gameObject);
 
+            // If it has a shield, destroy his shield, if not:
+            other.gameObject.GetComponent<ShipStats>().health--;
+            if (other.gameObject.GetComponent<ShipStats>().health <= 0)
+            {
+                // Restart enemy from last point?
+                Destroy(other.gameObject.transform.gameObject);
+            }
+            
+        }
     }
 }
