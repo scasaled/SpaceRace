@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class Ship : MonoBehaviour
 {
-
     public float speed;
     public float maxSpeed;
     public float acceleration;
@@ -29,6 +28,9 @@ public class Ship : MonoBehaviour
     private Vector3 norm;
     public GameObject controller;
 
+    public GameObject sparks;
+    private ShipStats stats;
+
     // Use this for initialization
     void Start()
     {
@@ -37,6 +39,8 @@ public class Ship : MonoBehaviour
         originalRotation = rb.rotation;
         girZ = 0.0f;
         girY = 0.0f;
+
+        stats = GetComponent<ShipStats>();
     }
 
     // Update is called once per frame
@@ -83,13 +87,6 @@ public class Ship : MonoBehaviour
         rb.AddRelativeForce(Vector3.forward, ForceMode.Acceleration);
 
 
-
-        //Calcul Gir
-
-        //float angle = ClampAngle(gameObject.transform.rotation.z, -maxRot, maxRot);
-
-
-
         if (Input.GetKey(KeyCode.RightArrow))
         {
             girY = Mathf.Lerp(girY, rotationSpeed, Time.deltaTime * 6);
@@ -124,15 +121,14 @@ public class Ship : MonoBehaviour
         }
     }
 
-    float ClampAngle(float angle, float min, float max)
+    void OnCollisionStay(Collision collision)
     {
-        if (angle < 90 || angle > 270)
+        Debug.Log("entra");
+        if (collision.transform.tag == "Enemy")
         {
-            if (angle > 180) angle -= 360; 
-            if (max > 180) max -= 360;
-            if (min > 180) min -= 360;
+            GameObject obj = (GameObject)Instantiate(sparks, collision.transform.position, collision.transform.rotation);
+            Destroy(obj, obj.GetComponent<ParticleSystem>().duration);
+            stats.health -= 0.05f;
         }
-        angle = Mathf.Clamp(angle, min, max);
-        return angle;
     }
 }

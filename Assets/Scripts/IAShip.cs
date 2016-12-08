@@ -44,6 +44,7 @@ public class IAShip : MonoBehaviour {
         girY = 0.0f;
         acceleration = 1000.0f;
         maxSpeed = 1500.0f;
+        WPindexPointer = 0;
     }
     
     void Update()
@@ -134,7 +135,8 @@ public class IAShip : MonoBehaviour {
     
     void OnTriggerEnter(Collider other)
     {
-        if (!triggered && waypoint.name == other.gameObject.name) {
+        if (!triggered && (waypoint != null) && waypoint.name == other.gameObject.name)
+        {
             print(waypoint.name);
             lastWP = other.transform;
             WPindexPointer++;
