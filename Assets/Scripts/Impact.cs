@@ -6,6 +6,8 @@ public class Impact : MonoBehaviour
     public GameObject explosion;
     public AudioClip sound;
 
+    public string tagEnemy;
+
     private ParticleSystem ps;
 
     // Use this for initialization
@@ -14,21 +16,23 @@ public class Impact : MonoBehaviour
         ps = explosion.GetComponent<ParticleSystem>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnTriggerEnter(Collider other)
     {
-        // TODO: get type of shoot, and update it depending of type
-    }
+        if (other.tag == tagEnemy)
+        {
+            GameObject obj = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
+            AudioSource.PlayClipAtPoint(sound, transform.position, 1f);
+            Destroy(obj, ps.duration);
+            Destroy(gameObject);
 
-    void OnCollisionEnter(Collision collision)
-    {
-        GameObject obj = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
-        Destroy(obj, ps.duration);
-
-        // TODO: Destroy collision.object if life < 0
-        //Destroy(collision.gameObject.transform.parent.gameObject, obj.duration);
-
-        AudioSource.PlayClipAtPoint(sound, transform.position, 1f);
-        Destroy(gameObject);
+            // If it has a shield, destroy his shield, if not:
+            other.gameObject.GetComponent<ShipStats>().health--;
+            if (other.gameObject.GetComponent<ShipStats>().health <= 0)
+            {
+                // Restart enemy from last point?
+                Destroy(other.gameObject.transform.gameObject);
+            }
+            
+        }
     }
 }

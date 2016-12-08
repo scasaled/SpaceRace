@@ -4,7 +4,7 @@ using System.Collections;
 public class Shoot : MonoBehaviour
 {
     public GameObject projectile;
-    public float velocity = 500.0f;
+    public float velocity = 50000.0f;
 
     private float lastTime;
     private BoxCollider bc;
@@ -24,10 +24,11 @@ public class Shoot : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && (lastTime <= 0.0f))
         {
             GameObject obj = (GameObject)Instantiate(projectile, transform.position + new Vector3(0f,0f,0f), transform.rotation);
+            obj.GetComponent<Impact>().tagEnemy = "Enemy";
 
             Rigidbody tmpRigidBody = obj.GetComponent<Rigidbody>();
             tmpRigidBody.transform.Rotate(projectile.transform.eulerAngles);
-            tmpRigidBody.AddForce(transform.forward * velocity);
+            tmpRigidBody.AddForce(transform.forward * (velocity+gameObject.GetComponent<Ship>().speed*100));
 
             lastTime = 0.5f;
         }
