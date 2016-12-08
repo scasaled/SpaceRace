@@ -16,6 +16,7 @@ public class IAShip : MonoBehaviour {
 
     public List<Transform> waypoints = new List<Transform>();
 
+    private Transform lastWP;
     private int WPindexPointer;
     private Rigidbody rb;
 
@@ -131,11 +132,11 @@ public class IAShip : MonoBehaviour {
         }
     }
     
-    void OnTriggerEnter()
+    void OnTriggerEnter(Collider other)
     {
-        if (!triggered)
-        {
+        if (!triggered && waypoint.name == other.gameObject.name) {
             print(waypoint.name);
+            lastWP = other.transform;
             WPindexPointer++;
             if (WPindexPointer >= waypoints.Count)
             {
@@ -145,10 +146,11 @@ public class IAShip : MonoBehaviour {
         }
     }
 
-    void OnTriggerExit()
+    void OnTriggerExit(Collider other)
     {
-        if (triggered)
+        if (triggered && other.gameObject.GetComponent<Transform>().name == lastWP.name)
         {
+            print(other.gameObject.name);
             triggered = false;
         }
     }
