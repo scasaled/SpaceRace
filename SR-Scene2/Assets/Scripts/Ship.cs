@@ -9,9 +9,9 @@ public class Ship : MonoBehaviour
     public float maxSpeed;
     public float acceleration;
     public float rotationSpeed;
-
+    
     private float maxRot = 15f;
-    private Rigidbody rb;
+	private Rigidbody rb;
     private Quaternion originalRotation;
     private float girY;
     private float girZ;
@@ -20,7 +20,7 @@ public class Ship : MonoBehaviour
     public float gravetat;
     public float dampFactor;
     public float maneig;
-
+    
     private BoxCollider bc;
     private float ratioSeparacio;
     private float F;
@@ -29,19 +29,14 @@ public class Ship : MonoBehaviour
     private Vector3 norm;
     public GameObject controller;
 
-    public GameObject sparks;
-    private ShipStats stats;
-
     // Use this for initialization
     void Start()
     {
         bc = GetComponent<BoxCollider>();
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody> ();
         originalRotation = rb.rotation;
         girZ = 0.0f;
         girY = 0.0f;
-
-        stats = GetComponent<ShipStats>();
     }
 
     // Update is called once per frame
@@ -64,7 +59,7 @@ public class Ship : MonoBehaviour
         for (int i = 0; i < rayPoints.Count; ++i)
         {
             RaycastHit hit;
-            if (Physics.Raycast(rayPoints[i], -transform.up, out hit, 30))
+            if (Physics.Raycast(rayPoints[i], -transform.up, out hit,30))
             {
                 ratioSeparacio = ((separacio - hit.distance) / separacio);
                 rigidesa = rb.mass * gravetat / rayPoints.Count;
@@ -87,15 +82,22 @@ public class Ship : MonoBehaviour
         rb.AddForce(vel * -maneig, ForceMode.Acceleration);
         rb.AddRelativeForce(Vector3.forward, ForceMode.Acceleration);
 
+
+
         //Calcul Gir
+
+        //float angle = ClampAngle(gameObject.transform.rotation.z, -maxRot, maxRot);
+
+
+
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            girY = Mathf.Lerp(girY, 100.0f, Time.deltaTime * 6);
+            girY = Mathf.Lerp(girY, rotationSpeed, Time.deltaTime * 6);
             girZ = Mathf.Lerp(girZ, 25.0f, Time.deltaTime * 3);
         }
         else if (Input.GetKey(KeyCode.LeftArrow))
         {
-            girY = Mathf.Lerp(girY, -100.0f, Time.deltaTime * 6);
+            girY = Mathf.Lerp(girY, -rotationSpeed, Time.deltaTime * 6);
             girZ = Mathf.Lerp(girZ, -25.0f, Time.deltaTime * 3);
         }
         else
@@ -106,10 +108,10 @@ public class Ship : MonoBehaviour
         }
 
         transform.Rotate(0.0f, girY * Time.deltaTime, 0.0f);
+
         controller.transform.rotation = Quaternion.Euler(controller.transform.eulerAngles.x, controller.transform.eulerAngles.y, -transform.eulerAngles.z + girZ);
 
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
+        if (Input.GetKey (KeyCode.UpArrow)) {
 
             if (speed < maxSpeed) speed += acceleration * Time.deltaTime;
             rb.AddForce(transform.forward * speed);
@@ -122,13 +124,15 @@ public class Ship : MonoBehaviour
         }
     }
 
-    void OnCollisionStay(Collision collision)
+    float ClampAngle(float angle, float min, float max)
     {
-        if (collision.transform.tag == "Enemy")
+        if (angle < 90 || angle > 270)
         {
-            GameObject obj = (GameObject)Instantiate(sparks, collision.transform.position, collision.transform.rotation);
-            Destroy(obj, obj.GetComponent<ParticleSystem>().duration);
-            stats.health -= 0.05f;
+            if (angle > 180) angle -= 360; 
+            if (max > 180) max -= 360;
+            if (min > 180) min -= 360;
         }
+        angle = Mathf.Clamp(angle, min, max);
+        return angle;
     }
 }
