@@ -26,12 +26,12 @@ public class HUDManager : MonoBehaviour
             GameObject canvasObject = GameObject.FindGameObjectsWithTag("MainCanvas")[0];
             health = canvasObject.transform.FindChild("HealthBar/Health").GetComponent<Text>();
             healthBar = canvasObject.transform.FindChild("HealthBar/CurrentHealthBar").GetComponent<Image>();
-            vel = canvasObject.transform.FindChild("Velocity").GetComponent<Text>();
-            currentLap = canvasObject.transform.FindChild("CurrentLap").GetComponent<Text>();
-            totalLaps = canvasObject.transform.FindChild("TotalLaps").GetComponent<Text>();
+            vel = canvasObject.transform.FindChild("Velocity/Velocity").GetComponent<Text>();
+            currentLap = canvasObject.transform.FindChild("Laps/CurrentLap").GetComponent<Text>();
+            totalLaps = canvasObject.transform.FindChild("Laps/TotalLaps").GetComponent<Text>();
             shield = canvasObject.transform.FindChild("ShieldBar/Center/Shield").GetComponent<Text>();
             shieldBar = canvasObject.transform.FindChild("ShieldBar/CurrentShieldBar").GetComponent<Image>();
-            time = canvasObject.transform.FindChild("Time").GetComponent<Text>();
+            time = canvasObject.transform.FindChild("Time/Time").GetComponent<Text>();
             stats = player.GetComponent<ShipStats>();
 
             startTime = Time.time;
