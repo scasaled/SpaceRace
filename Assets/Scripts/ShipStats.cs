@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ShipStats : MonoBehaviour {
 
+    public float maxHealth = 100f;
     public float health = 100f;
     public int currentLap = 0;
     public int currentPosition = 1;

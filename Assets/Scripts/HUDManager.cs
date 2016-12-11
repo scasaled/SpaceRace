@@ -6,9 +6,12 @@ public class HUDManager : MonoBehaviour
     private GameObject player;
     private ShipStats stats;
     private Text vel;
-    private Text laps;
+    private Text currentLap;
+    private Text totalLaps;
     private Text shield;
+    private Image shieldBar;
     private Text health;
+    private Image healthBar;
     private Text time;
 
     private float startTime = 0;
@@ -21,10 +24,13 @@ public class HUDManager : MonoBehaviour
         if (player)
         {
             GameObject canvasObject = GameObject.FindGameObjectsWithTag("MainCanvas")[0];
-            health = canvasObject.transform.FindChild("Health").GetComponent<Text>();
+            health = canvasObject.transform.FindChild("HealthBar/Health").GetComponent<Text>();
+            healthBar = canvasObject.transform.FindChild("HealthBar/CurrentHealthBar").GetComponent<Image>();
             vel = canvasObject.transform.FindChild("Velocity").GetComponent<Text>();
-            laps = canvasObject.transform.FindChild("Laps").GetComponent<Text>();
-            shield = canvasObject.transform.FindChild("Shield").GetComponent<Text>();
+            currentLap = canvasObject.transform.FindChild("CurrentLap").GetComponent<Text>();
+            totalLaps = canvasObject.transform.FindChild("TotalLaps").GetComponent<Text>();
+            shield = canvasObject.transform.FindChild("ShieldBar/Center/Shield").GetComponent<Text>();
+            shieldBar = canvasObject.transform.FindChild("ShieldBar/CurrentShieldBar").GetComponent<Image>();
             time = canvasObject.transform.FindChild("Time").GetComponent<Text>();
             stats = player.GetComponent<ShipStats>();
 
@@ -40,12 +46,19 @@ public class HUDManager : MonoBehaviour
             stageTime = Time.time - startTime;
             int min = ((int)stageTime) / 60;
             time.text = min + ":" + (stageTime % 60).ToString("00.0");
-            health.text = "Health: " + stats.health.ToString("0");
-            laps.text = "Lap " + stats.currentLap.ToString() + " OF " + 3;
-            shield.text = "Shield: " + stats.shield.ToString() + " %";
+            health.text = stats.health.ToString("0") + " HP" ;
+
+            float ratio = Mathf.Max(0,stats.health / stats.maxHealth);
+            healthBar.rectTransform.localScale = new Vector3(ratio, 1, 1);
+
+
+            currentLap.text = stats.currentLap.ToString();
+            totalLaps.text = "3";
+            shield.text = stats.shield.ToString() + "%";
+            shieldBar.fillAmount = stats.shield;
             int speed = (int)player.GetComponent<Rigidbody>().transform.InverseTransformDirection(player.GetComponent<Rigidbody>().velocity).z;
             speed /= 5;
-            vel.text = "Vel.: " + speed.ToString() + " km/h";
+            vel.text = Mathf.Max(0,speed).ToString();
         }
     }
 }
