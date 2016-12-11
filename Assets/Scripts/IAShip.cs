@@ -2,52 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class IAShip : MonoBehaviour {
-
-    public float acceleration;
-    public float maxSpeed;
-
-    private float speed;
-    private float girY;
-    private float girZ;
+public class IAShip : Ship
+{
     private bool accelState;
     private bool slowState;
-    private Transform waypoint;
-
-    public List<Transform> waypoints = new List<Transform>();
-
-    private Transform lastWP;
-    private int WPindexPointer;
-    private Rigidbody rb;
-
-    public GameObject controller;
-
     private bool triggered;
     private float dirNum;
-    private BoxCollider bc;
-    private float ratioSeparacio;
-    private float F;
-    private float rigidesa;
-    private float damp;
 
-    public float separacio;
-    public float gravetat;
-    public float dampFactor;
-    public float maneig;
-    public float rotationSpeed;
-
-    void Start()
-    {
-        bc = GetComponent<BoxCollider>();
-        rb = GetComponent<Rigidbody>();
-        girZ = 0.0f;
-        girY = 0.0f;
-        acceleration = 1000.0f;
-        maxSpeed = 1500.0f;
-        WPindexPointer = 0;
-    }
-    
-    void Update()
+    public override void Update()
     {
         Accell();
         waypoint = waypoints[WPindexPointer];

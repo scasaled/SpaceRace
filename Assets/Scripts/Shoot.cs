@@ -23,8 +23,8 @@ public class Shoot : MonoBehaviour
         lastTime -= Time.deltaTime;
         if (Input.GetKey(KeyCode.Space) && (lastTime <= 0.0f))
         {
-            GameObject obj = (GameObject)Instantiate(projectile, transform.position + new Vector3(0f,0f,0f), transform.rotation);
-            obj.GetComponent<Impact>().tagEnemy = "Enemy";
+            GameObject obj = (GameObject)Instantiate(projectile, transform.position, transform.rotation);
+            obj.GetComponent<Impact>().shipName = name;
 
             Rigidbody tmpRigidBody = obj.GetComponent<Rigidbody>();
             tmpRigidBody.transform.Rotate(projectile.transform.eulerAngles);

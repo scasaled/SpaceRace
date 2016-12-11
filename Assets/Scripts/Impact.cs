@@ -6,7 +6,7 @@ public class Impact : MonoBehaviour
     public GameObject explosion;
     public AudioClip sound;
 
-    public string tagEnemy;
+    public string shipName;
 
     private ParticleSystem ps;
 
@@ -18,7 +18,8 @@ public class Impact : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == tagEnemy)
+        if ((other.tag == "Player" || other.tag  == "Enemy") &&
+            other.name != shipName)
         {
             GameObject obj = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
             AudioSource.PlayClipAtPoint(sound, transform.position, 1f);

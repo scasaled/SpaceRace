@@ -1,12 +1,13 @@
 fileFormatVersion: 2
 guid: 63b5d49f014f945419f429629b5b4d89
-timeCreated: 1481458401
+timeCreated: 1481467163
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - controller: {instanceID: 0}
   - sparks: {fileID: 100002, guid: 51f86eac077549d4aa4627aa42653fb9, type: 2}
+  - sparksSound: {fileID: 8300000, guid: f199a7614f9bea34481a6a1143e5a528, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

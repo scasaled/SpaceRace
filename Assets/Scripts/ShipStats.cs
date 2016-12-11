@@ -3,6 +3,9 @@ using System.Collections;
 
 public class ShipStats : MonoBehaviour {
 
+
+    public GameObject ship;
+
     public float maxHealth = 100f;
     public float health = 100f;
     public int currentLap = 0;
@@ -19,4 +22,16 @@ public class ShipStats : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public void Damage(float damage)
+    {
+        health -= damage;
+        if (health < 100.0f)
+        {
+            Debug.Log("ENTRA");
+            GameObject obj = (GameObject)Instantiate(ship, transform.position + new Vector3(0f, 0f, 0f), transform.rotation);
+            Destroy(gameObject);
+            obj.name = "Feisar";
+        }
+    }
 }
