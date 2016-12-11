@@ -52,7 +52,13 @@ public class IAShip : Ship
         }
 
         //Això és perquè baixi si esta volant
-        if (vola) rb.AddForce(90.0f * -transform.up, ForceMode.Acceleration);
+        if (vola)
+        {
+            rb.AddForce(90.0f * -transform.up, ForceMode.Acceleration);
+            respawn += Time.deltaTime;
+            if (respawn > 2.5f) tpShip();
+        }
+        else respawn = 0.0f;
 
         //A més maneig, més lent anirà la nau, però més adherencia tindrá. (Si es vol conservar la velocitat, cal augmentar-la manualment)
         Vector3 vel = rb.velocity;

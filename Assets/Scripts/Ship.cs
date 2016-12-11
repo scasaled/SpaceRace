@@ -48,6 +48,8 @@ public class Ship : MonoBehaviour
 
     private bool triggered;
     private bool first;
+    public float respawn;
+    public GameObject ship;
 
     // Use this for initialization
     void Start()
@@ -60,6 +62,7 @@ public class Ship : MonoBehaviour
         first = true;
         WPindexPointer = 0;
         WPindexLapPointer = 0;
+        respawn = 0.0f;
 
         stats = GetComponent<ShipStats>();
         controller = transform.Find("GameObject").gameObject;
@@ -109,5 +112,18 @@ public class Ship : MonoBehaviour
             print(other.gameObject.name);
             triggered = false;
         }
+    }
+
+    public void tpShip()
+    {
+        rb.isKinematic = true;
+        transform.position = lastWPLap.position;
+        transform.rotation = lastWPLap.rotation;
+        rb.isKinematic = false;
+        respawn = 0.0f;
+        /*
+        GameObject obj = (GameObject)Instantiate(ship, lastWPLap.position, lastWPLap.rotation);
+        
+        Destroy(gameObject);*/
     }
 }
