@@ -29,6 +29,7 @@ public class Ship : MonoBehaviour
     public GameObject controller;
 
     public GameObject sparks;
+    public AudioClip sparksSound;
     private ShipStats stats;
 
     // Use this for initialization
@@ -123,11 +124,11 @@ public class Ship : MonoBehaviour
 
     void OnCollisionStay(Collision collision)
     {
-        Debug.Log("entra");
         if (collision.transform.tag == "Enemy")
         {
             GameObject obj = (GameObject)Instantiate(sparks, collision.transform.position, collision.transform.rotation);
             Destroy(obj, obj.GetComponent<ParticleSystem>().duration);
+            AudioSource.PlayClipAtPoint(sparksSound, transform.position, 1f);
             stats.health -= 0.05f;
         }
     }
