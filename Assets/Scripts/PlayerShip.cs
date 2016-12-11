@@ -8,8 +8,6 @@ public class PlayerShip : Ship
     public override void Update()
     {
         //Calcul Levitacio
-
-        Vector3 posNau = transform.position;
         Vector3 midaNau = bc.size;
 
         //Els 4 punts on estaran els raycast

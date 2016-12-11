@@ -7,19 +7,16 @@ public class Shoot : MonoBehaviour
     public float velocity = 50000.0f;
 
     private float lastTime;
-    private BoxCollider bc;
 
     // Use this for initialization
     void Start()
     {
         lastTime = 0.0f;
-        bc = GetComponent<BoxCollider>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 midaNau = bc.size;
         lastTime -= Time.deltaTime;
         if (Input.GetKey(KeyCode.Space) && (lastTime <= 0.0f))
         {

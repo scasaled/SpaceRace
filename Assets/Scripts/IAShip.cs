@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class IAShip : Ship
 {
     private bool accelState;
-    private bool slowState;
     private bool triggered;
     private float dirNum;
 
@@ -21,12 +20,9 @@ public class IAShip : Ship
         if (accelState == false) 
         {
             accelState = true;
-            slowState = false;
         }
 
         //Calcul Levitacio
-
-        Vector3 posNau = transform.position;
         Vector3 midaNau = bc.size;
 
         //Els 4 punts on estaran els raycast
