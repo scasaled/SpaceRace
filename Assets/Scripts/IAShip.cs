@@ -13,6 +13,7 @@ public class IAShip : Ship
     {
         Accell();
         waypoint = waypoints[WPindexPointer];
+        waypointLap = waypointsLap[WPindexLapPointer];
     }
 
     void Accell()
@@ -108,6 +109,8 @@ public class IAShip : Ship
             }
             triggered = true;
         }
+
+        contadorLapsEnter(other);
     }
 
     void OnTriggerExit(Collider other)
@@ -117,6 +120,8 @@ public class IAShip : Ship
             print(other.gameObject.name);
             triggered = false;
         }
+
+        contadorLapsExit(other);
     }
 
     float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up)

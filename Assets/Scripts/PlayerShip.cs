@@ -80,6 +80,17 @@ public class PlayerShip : Ship
             else if (speed < 0) speed = 0;
             rb.AddForce(transform.forward * speed);
         }
+        waypointLap = waypointsLap[WPindexLapPointer];
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        contadorLapsEnter(other);
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        contadorLapsExit(other);
     }
 
 }
