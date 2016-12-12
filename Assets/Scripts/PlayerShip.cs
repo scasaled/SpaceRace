@@ -57,12 +57,12 @@ public class PlayerShip : Ship
         if (Input.GetKey(KeyCode.RightArrow))
         {
             girY = Mathf.Lerp(girY, rotationSpeed, Time.deltaTime * 6);
-            girZ = Mathf.Lerp(girZ, 25.0f, Time.deltaTime * 3);
+            girZ = Mathf.Lerp(girZ, 30.0f, Time.deltaTime * 3);
         }
         else if (Input.GetKey(KeyCode.LeftArrow))
         {
             girY = Mathf.Lerp(girY, -rotationSpeed, Time.deltaTime * 6);
-            girZ = Mathf.Lerp(girZ, -25.0f, Time.deltaTime * 3);
+            girZ = Mathf.Lerp(girZ, -30.0f, Time.deltaTime * 3);
         }
         else
         {
