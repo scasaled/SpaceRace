@@ -50,10 +50,14 @@ public class Ship : MonoBehaviour
     private bool first;
     public float respawn;
     public GameObject ship;
+    protected Camera cam;
+    protected Vector3 cameraInitPos;
 
     // Use this for initialization
     void Start()
     {
+        cam = GetComponentInChildren<Camera>();
+        if (cam != null) cameraInitPos = cam.transform.position;
         bc = GetComponent<BoxCollider>();
         rb = GetComponent<Rigidbody> ();
         originalRotation = rb.rotation;

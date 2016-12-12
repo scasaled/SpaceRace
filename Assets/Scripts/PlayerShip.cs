@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class PlayerShip : Ship
 {
+
+    private float offsetCamera = 0.0f;
     // Update is called once per frame
     public override void Update()
     {
@@ -79,14 +81,19 @@ public class PlayerShip : Ship
 
             if (speed < maxSpeed) speed += acceleration * Time.deltaTime;
             rb.AddForce(transform.forward * speed);
+            offsetCamera = Mathf.Lerp(offsetCamera, 200.0f, Time.deltaTime*0.5f);
         }
         else
         {
             if (speed > 0) speed -= acceleration * Time.deltaTime;
             else if (speed < 0) speed = 0;
             rb.AddForce(transform.forward * speed);
+            offsetCamera = Mathf.Lerp(offsetCamera, 0.0f, Time.deltaTime);
         }
         waypointLap = waypointsLap[WPindexLapPointer];
+
+        //Move camera
+        cam.transform.position = transform.TransformPoint(new Vector3(0.0f, 59.6f+(offsetCamera/5.0f), -208.8f-offsetCamera));
     }
 
     void OnTriggerEnter(Collider other)
