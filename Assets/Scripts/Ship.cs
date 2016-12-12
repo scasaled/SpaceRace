@@ -85,7 +85,7 @@ public class Ship : MonoBehaviour
             GameObject obj = (GameObject)Instantiate(sparks, collision.transform.position, collision.transform.rotation);
             Destroy(obj, obj.GetComponent<ParticleSystem>().duration);
             AudioSource.PlayClipAtPoint(sparksSound, transform.position, 1f);
-            //stats.Damage(0.05f);
+            stats.Damage(0.05f);
         }
     }
 
@@ -96,7 +96,7 @@ public class Ship : MonoBehaviour
             WPindexLapPointer++;
             if (WPindexLapPointer >= waypointsLap.Count) WPindexLapPointer = 0;
 
-            if (WPindexLapPointer == 1 && !first) ++stats.currentLap;
+            if (WPindexLapPointer == 1 && !first) stats.lapPass();
             else if (first) first = false;
             lastWPLap = other.transform;
 
@@ -114,16 +114,5 @@ public class Ship : MonoBehaviour
         }
     }
 
-    public void tpShip()
-    {
-        rb.isKinematic = true;
-        transform.position = lastWPLap.position;
-        transform.rotation = lastWPLap.rotation;
-        rb.isKinematic = false;
-        respawn = 0.0f;
-        /*
-        GameObject obj = (GameObject)Instantiate(ship, lastWPLap.position, lastWPLap.rotation);
-        
-        Destroy(gameObject);*/
-    }
+    public virtual void tpShip() { }
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 public class HUDManager : MonoBehaviour
 {
     private GameObject player;
@@ -14,8 +15,12 @@ public class HUDManager : MonoBehaviour
     private Image healthBar;
     private Text time;
 
-    private float startTime = 0;
-    private float stageTime = 0;
+
+    private List<bool> lapTimeShown;
+    private List<Transform> laps;
+
+
+    
 
     // Use this for initialization
     void Start()
@@ -23,6 +28,9 @@ public class HUDManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         if (player)
         {
+            laps = new List<Transform>();
+            lapTimeShown = new List<bool>(3) { false };
+
             GameObject canvasObject = GameObject.FindGameObjectsWithTag("MainCanvas")[0];
             health = canvasObject.transform.FindChild("HealthBar/Health").GetComponent<Text>();
             healthBar = canvasObject.transform.FindChild("HealthBar/CurrentHealthBar").GetComponent<Image>();
@@ -32,9 +40,12 @@ public class HUDManager : MonoBehaviour
             shield = canvasObject.transform.FindChild("ShieldBar/Center/Shield").GetComponent<Text>();
             shieldBar = canvasObject.transform.FindChild("ShieldBar/CurrentShieldBar").GetComponent<Image>();
             time = canvasObject.transform.FindChild("Time/Time").GetComponent<Text>();
-            stats = player.GetComponent<ShipStats>();
+            print(canvasObject.transform.FindChild("LapsTime/Lap0").Find("Time").GetComponent<Text>().GetType());
+            //laps.Add();
+            //laps.Add(canvasObject.transform.FindChild("LapsTime/Lap1"));
+            //laps.Add(canvasObject.transform.FindChild("LapsTime/Lap2"));
 
-            startTime = Time.time;
+            stats = player.GetComponent<ShipStats>();
         }
     }
 
@@ -43,9 +54,8 @@ public class HUDManager : MonoBehaviour
     {
         if (player)
         {
-            stageTime = Time.time - startTime;
-            int min = ((int)stageTime) / 60;
-            time.text = min + ":" + (stageTime % 60).ToString("00.0");
+            int min = ((int)stats.stageTime) / 60;
+            time.text = min + ":" + (stats.stageTime % 60).ToString("00.0");
             health.text = stats.health.ToString("0") + " HP" ;
 
             float ratio = Mathf.Max(0,stats.health / stats.maxHealth);
@@ -59,6 +69,23 @@ public class HUDManager : MonoBehaviour
             int speed = (int)player.GetComponent<Rigidbody>().transform.InverseTransformDirection(player.GetComponent<Rigidbody>().velocity).z;
             speed /= 5;
             vel.text = Mathf.Max(0,speed).ToString();
+
+            
+            int i = 0;
+            bool currentLapFound = false;
+            while (!currentLapFound && i < lapTimeShown.Count)
+            {
+                currentLapFound = !lapTimeShown[i];
+                if (!lapTimeShown[i] && stats.lapsTime.Count > i)
+                {
+                    lapTimeShown[i] = true;
+                     Transform lap = ((GameObject)GameObject.FindGameObjectsWithTag("MainCanvas")[0]).transform.FindChild("LapsTime/Lap"+ i);
+                    lap.gameObject.SetActive(true);
+                    lap.Find("Time").GetComponent<Text>().text = stats.lapsTime[i].ToString("0.00");
+                }
+                i++;
+            }
         }
     }
+
 }

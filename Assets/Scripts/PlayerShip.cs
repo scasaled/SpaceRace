@@ -99,4 +99,13 @@ public class PlayerShip : Ship
         contadorLapsExit(other);
     }
 
+    public override void tpShip()
+    {
+        rb.isKinematic = true;
+        transform.position = lastWPLap.position;
+        transform.rotation = lastWPLap.rotation;
+        rb.isKinematic = false;
+        respawn = 0.0f;
+    }
+
 }

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ShipStats : MonoBehaviour {
-
 
     public GameObject ship;
 
@@ -12,26 +12,39 @@ public class ShipStats : MonoBehaviour {
     public int currentPosition = 1;
     public int shield = 100;
 
+    public float startTime = 0;
+    public float stageTime = 0;
+
+    public List<float> lapsTime;
+    private float lapStartTime;
 
 	// Use this for initialization
 	void Start () {
-	
+        lapStartTime = 0f;
+        startTime = Time.time;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+        stageTime = Time.time - startTime;
 	}
 
     public void Damage(float damage)
     {
         health -= damage;
-        if (health < 100.0f)
+        if (health <= 100.0f)
         {
-            Debug.Log("ENTRA");
-            GameObject obj = (GameObject)Instantiate(ship, transform.position + new Vector3(0f, 0f, 0f), transform.rotation);
-            Destroy(gameObject);
-            obj.name = "Feisar";
+            ship.GetComponent<Ship>().tpShip();
         }
+    }
+
+    public void lapPass()
+    {
+        currentLap++;
+        lapsTime.Add(stageTime - lapStartTime);
+        lapStartTime = stageTime;
+
+
+
     }
 }

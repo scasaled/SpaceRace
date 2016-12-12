@@ -17,7 +17,7 @@ public class IAShip : Ship
 
     void Accell()
     {
-        if (accelState == false) 
+        if (accelState == false)
         {
             accelState = true;
         }
@@ -97,7 +97,7 @@ public class IAShip : Ship
             speed = maxSpeed;
         }
     }
-    
+
     void OnTriggerEnter(Collider other)
     {
         if (!triggered && (waypoint != null) && waypoint.name == other.gameObject.name)
@@ -124,6 +124,15 @@ public class IAShip : Ship
         }
 
         contadorLapsExit(other);
+    }
+
+    public override void tpShip()
+    {
+        rb.isKinematic = true;
+        transform.position = lastWP.position;
+        transform.rotation = lastWP.rotation;
+        rb.isKinematic = false;
+        respawn = 0.0f;
     }
 
     float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up)
