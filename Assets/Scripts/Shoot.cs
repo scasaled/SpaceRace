@@ -21,7 +21,8 @@ public class Shoot : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && (lastTime <= 0.0f))
         {
             GameObject obj = (GameObject)Instantiate(projectile, transform.position, transform.rotation);
-            //obj.transform.parent = 
+            obj.transform.parent = transform;
+
             obj.GetComponent<Impact>().shipName = name;
             Destroy(obj, 2.5f);
 

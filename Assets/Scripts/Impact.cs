@@ -4,16 +4,16 @@ using System.Collections;
 public class Impact : MonoBehaviour
 {
     public GameObject explosion;
-    public AudioClip sound;
-
     public string shipName;
 
     private ParticleSystem ps;
+    private AudioSource sound;
 
     // Use this for initialization
     void Start()
     {
         ps = explosion.GetComponent<ParticleSystem>();
+        sound = explosion.GetComponent<AudioSource>();
     }
 
     void OnTriggerEnter(Collider other)
@@ -22,7 +22,7 @@ public class Impact : MonoBehaviour
             other.name != shipName)
         {
             GameObject obj = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
-            AudioSource.PlayClipAtPoint(sound, transform.position, 1f);
+            sound.transform.position = transform.position;
             Destroy(obj, ps.duration);
             Destroy(gameObject);
 
