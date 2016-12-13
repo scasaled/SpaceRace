@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Ship : MonoBehaviour
 {
-
+    public GameObject explosion;
     public GameObject sparks;
     private bool isSparksPlaying;
 
@@ -76,10 +76,10 @@ public class Ship : MonoBehaviour
         lastWPLap = waypointsLap[WPindexLapPointer];
 
         isSparksPlaying = false;
+        sparks.GetComponent<AudioSource>().time = 4f;
     }
 
     // Update is called once per frame
-
     public virtual void Update()
     {
     }
@@ -91,19 +91,16 @@ public class Ship : MonoBehaviour
             if (!isSparksPlaying)
             {
                 GameObject obj = (GameObject)Instantiate(sparks, collision.transform.position, collision.transform.rotation);
-                Destroy(obj, obj.GetComponent<ParticleSystem>().duration);
-                Invoke("SparkFinished", obj.GetComponent<ParticleSystem>().duration);
+                float duration = obj.GetComponent<ParticleSystem>().duration;
+                Destroy(obj, duration);
+                Invoke("SparksFinished", duration);
                 isSparksPlaying = true;
-                AudioSource sparksAudio = obj.GetComponent<AudioSource>();
-                sparksAudio.transform.position = transform.position;
-                sparksAudio.time = 4f;
-                sparksAudio.Play();
             }
             Damage(0.05f, 0.05f);
         }
     }
 
-    private void SparkFinished()
+    private void SparksFinished()
     {
         isSparksPlaying = false;
     }
@@ -135,7 +132,6 @@ public class Ship : MonoBehaviour
 
     public virtual void Damage(float healthDamage, float shieldDamage)
     {
-        print(stats);
         stats.Health -= healthDamage;
         stats.Shield -= shieldDamage;
     }
@@ -145,8 +141,24 @@ public class Ship : MonoBehaviour
         stats.LapPass();
     }
 
-    public virtual void tpShip()
+    protected void tpShip(Vector3 position, Quaternion rotation)
     {
+        ParticleSystem ps = explosion.GetComponent<ParticleSystem>();
+        GameObject parent = new GameObject("DestroyExplosion");
+
+        for (int i = 0; i < 4; ++i)
+        {
+            GameObject obj = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
+            obj.transform.parent = parent.transform;
+        }
+
+        Destroy(parent, ps.duration);
+
+        rb.isKinematic = true;
+        transform.position = position;
+        transform.rotation = rotation;
+        rb.isKinematic = false;
+
         respawn = 0.0f;
         stats.restartHealth();
         stats.restartShield();

@@ -61,7 +61,7 @@ public class IAShip : Ship
         {
             rb.AddForce(90.0f * -transform.up, ForceMode.Acceleration);
             respawn += Time.deltaTime;
-            if (respawn > 2.5f) tpShip();
+            if (respawn > 2.5f) tpShipIA();
         }
         else respawn = 0.0f;
 
@@ -131,21 +131,17 @@ public class IAShip : Ship
         contadorLapsExit(other);
     }
 
-    public override void tpShip()
+    public void tpShipIA()
     {
-        rb.isKinematic = true;
-        transform.position = lastWP.position;
-        transform.rotation = lastWP.rotation;
-        rb.isKinematic = false;
-        base.tpShip();
+        base.tpShip(lastWP.position, lastWP.rotation);
     }
 
     public override void Damage(float healthDamage, float shieldDamage)
     {
         base.Damage(healthDamage, shieldDamage);
-        if (stats.Health == 0f) tpShip();
+        if (stats.Health == 0f) tpShipIA();
     }
-    
+
     float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up)
     {
         Vector3 perp = Vector3.Cross(fwd, targetDir);

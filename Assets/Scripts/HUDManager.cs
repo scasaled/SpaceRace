@@ -63,7 +63,7 @@ public class HUDManager : MonoBehaviour
         time.text = minSec(stageTime);
     }
 
-    public void updatehealth(float health, float maxHealth)
+    public void updateHealth(float health, float maxHealth)
     {
         healthText.text = health.ToString("0") + " HP";
         float ratio = Mathf.Max(0, health / maxHealth);

@@ -12,7 +12,13 @@ public class PlayerShip : Ship
     {
         base.Start();
         hudManager = statsDisplay.GetComponent<HUDManager>();
-        print(hudManager);
+        updateStats();
+    }
+
+    private void updateStats()
+    {
+        hudManager.updateHealth(stats.Health, stats.MaxHealth);
+        hudManager.updateShield(stats.Shield);
     }
 
     public override void Update()
@@ -32,7 +38,7 @@ public class PlayerShip : Ship
         for (int i = 0; i < rayPoints.Count; ++i)
         {
             RaycastHit hit;
-            if (Physics.Raycast(rayPoints[i], -transform.up, out hit,30))
+            if (Physics.Raycast(rayPoints[i], -transform.up, out hit, 30))
             {
                 ratioSeparacio = ((separacio - hit.distance) / separacio);
                 rigidesa = rb.mass * gravetat / rayPoints.Count;
@@ -53,7 +59,7 @@ public class PlayerShip : Ship
             rb.AddForce(90.0f * -transform.up, ForceMode.Acceleration);
             respawn += Time.deltaTime;
             print(respawn);
-            if (respawn > 2.5f) tpShip();
+            if (respawn > 2.5f) tpShipPlayer();
         }
         else respawn = 0.0f;
 
@@ -85,11 +91,12 @@ public class PlayerShip : Ship
 
         controller.transform.rotation = Quaternion.Euler(controller.transform.eulerAngles.x, controller.transform.eulerAngles.y, -transform.eulerAngles.z + girZ);
 
-        if (Input.GetKey (KeyCode.UpArrow)) {
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
 
             if (speed < maxSpeed) speed += acceleration * Time.deltaTime;
             rb.AddForce(transform.forward * speed);
-            offsetCamera = Mathf.Lerp(offsetCamera, 200.0f, Time.deltaTime*0.5f);
+            offsetCamera = Mathf.Lerp(offsetCamera, 200.0f, Time.deltaTime * 0.5f);
         }
         else
         {
@@ -103,7 +110,7 @@ public class PlayerShip : Ship
         hudManager.updateTime(stats.StageTime);
 
         //Move camera
-        cam.transform.position = transform.TransformPoint(new Vector3(0.0f, 59.6f+(offsetCamera/5.0f), -208.8f-offsetCamera));
+        cam.transform.position = transform.TransformPoint(new Vector3(0.0f, 59.6f + (offsetCamera / 5.0f), -208.8f - offsetCamera));
     }
 
     void OnTriggerEnter(Collider other)
@@ -116,21 +123,17 @@ public class PlayerShip : Ship
         contadorLapsExit(other);
     }
 
-    public override void tpShip()
+    public void tpShipPlayer()
     {
-        rb.isKinematic = true;
-        transform.position = lastWPLap.position;
-        transform.rotation = lastWPLap.rotation;
-        rb.isKinematic = false;
-
-        base.tpShip();
+        base.tpShip(lastWPLap.position, lastWPLap.rotation);
+        updateStats();
     }
 
     public override void Damage(float healthDamage, float shieldDamage)
     {
         base.Damage(healthDamage, shieldDamage);
-        hudManager.updatehealth(stats.Health, stats.MaxHealth);
-        if (stats.Health == 0f) tpShip();
+        hudManager.updateHealth(stats.Health, stats.MaxHealth);
+        if (stats.Health == 0f) tpShipPlayer();
     }
 
     public override void LapPass()
