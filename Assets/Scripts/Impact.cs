@@ -27,11 +27,12 @@ public class Impact : MonoBehaviour
             Destroy(gameObject);
 
             // If it has a shield, destroy his shield, if not:
-            other.gameObject.GetComponent<ShipStats>().health--;
-            if (other.gameObject.GetComponent<ShipStats>().health <= 0)
+            other.gameObject.GetComponent<ShipStats>().Health-=100f;
+            if (other.gameObject.GetComponent<ShipStats>().Health == 0f)
             {
                 // Restart enemy from last point?
-                Destroy(other.gameObject.transform.gameObject);
+                if (other.gameObject.tag == "Player") other.gameObject.GetComponent<PlayerShip>().tpShip();
+                else if (other.gameObject.tag == "Enemy") other.gameObject.GetComponent<IAShip>().tpShip();
             }
             
         }

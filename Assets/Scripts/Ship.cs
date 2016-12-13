@@ -6,15 +6,15 @@ public class Ship : MonoBehaviour
 {
 
     public GameObject sparks;
-    public AudioClip sparksSound;
+    private bool isSparksPlaying;
 
     public float speed;
     public float maxSpeed;
     public float acceleration;
     public float rotationSpeed;
-    
+
     protected float maxRot = 15f;
-	protected Rigidbody rb;
+    protected Rigidbody rb;
     protected Quaternion originalRotation;
     protected float girY;
     protected float girZ;
@@ -54,12 +54,12 @@ public class Ship : MonoBehaviour
     protected Vector3 cameraInitPos;
 
     // Use this for initialization
-    void Start()
+    public virtual void Start()
     {
         cam = GetComponentInChildren<Camera>();
         if (cam != null) cameraInitPos = cam.transform.position;
         bc = GetComponent<BoxCollider>();
-        rb = GetComponent<Rigidbody> ();
+        rb = GetComponent<Rigidbody>();
         originalRotation = rb.rotation;
         girZ = 0.0f;
         girY = 0.0f;
@@ -74,10 +74,12 @@ public class Ship : MonoBehaviour
             foreach (Transform wp in waypointsList) waypoints.Add(wp);
         foreach (Transform wp in waypointsLapList) waypointsLap.Add(wp);
         lastWPLap = waypointsLap[WPindexLapPointer];
+
+        isSparksPlaying = false;
     }
 
     // Update is called once per frame
-    
+
     public virtual void Update()
     {
     }
@@ -86,11 +88,24 @@ public class Ship : MonoBehaviour
     {
         if (collision.transform.tag == "Enemy" || collision.transform.tag == "Player")
         {
-            GameObject obj = (GameObject)Instantiate(sparks, collision.transform.position, collision.transform.rotation);
-            Destroy(obj, obj.GetComponent<ParticleSystem>().duration);
-            AudioSource.PlayClipAtPoint(sparksSound, transform.position, 1f);
-            stats.Damage(0.05f);
+            if (!isSparksPlaying)
+            {
+                GameObject obj = (GameObject)Instantiate(sparks, collision.transform.position, collision.transform.rotation);
+                Destroy(obj, obj.GetComponent<ParticleSystem>().duration);
+                Invoke("SparkFinished", obj.GetComponent<ParticleSystem>().duration);
+                isSparksPlaying = true;
+                AudioSource sparksAudio = obj.GetComponent<AudioSource>();
+                sparksAudio.transform.position = transform.position;
+                sparksAudio.time = 4f;
+                sparksAudio.Play();
+            }
+            Damage(0.05f, 0.05f);
         }
+    }
+
+    private void SparkFinished()
+    {
+        isSparksPlaying = false;
     }
 
     public void contadorLapsEnter(Collider other)
@@ -100,12 +115,12 @@ public class Ship : MonoBehaviour
             WPindexLapPointer++;
             if (WPindexLapPointer >= waypointsLap.Count) WPindexLapPointer = 0;
 
-            if (WPindexLapPointer == 1 && !first) stats.lapPass();
+            if (WPindexLapPointer == 1 && !first) LapPass();
             else if (first) first = false;
             lastWPLap = other.transform;
 
             triggered = true;
-            
+
         }
     }
 
@@ -118,5 +133,22 @@ public class Ship : MonoBehaviour
         }
     }
 
-    public virtual void tpShip() { }
+    public virtual void Damage(float healthDamage, float shieldDamage)
+    {
+        print(stats);
+        stats.Health -= healthDamage;
+        stats.Shield -= shieldDamage;
+    }
+
+    public virtual void LapPass()
+    {
+        stats.LapPass();
+    }
+
+    public virtual void tpShip()
+    {
+        respawn = 0.0f;
+        stats.restartHealth();
+        stats.restartShield();
+    }
 }

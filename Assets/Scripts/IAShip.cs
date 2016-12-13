@@ -8,6 +8,11 @@ public class IAShip : Ship
     private bool triggered;
     private float dirNum;
 
+    public override void Start()
+    {
+        base.Start();
+    }
+
     public override void Update()
     {
         Accell();
@@ -132,9 +137,15 @@ public class IAShip : Ship
         transform.position = lastWP.position;
         transform.rotation = lastWP.rotation;
         rb.isKinematic = false;
-        respawn = 0.0f;
+        base.tpShip();
     }
 
+    public override void Damage(float healthDamage, float shieldDamage)
+    {
+        base.Damage(healthDamage, shieldDamage);
+        if (stats.Health == 0f) tpShip();
+    }
+    
     float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up)
     {
         Vector3 perp = Vector3.Cross(fwd, targetDir);

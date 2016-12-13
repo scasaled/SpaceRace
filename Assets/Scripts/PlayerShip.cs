@@ -4,9 +4,17 @@ using System.Collections.Generic;
 
 public class PlayerShip : Ship
 {
-
+    public GameObject statsDisplay;
+    private HUDManager hudManager;
     private float offsetCamera = 0.0f;
-    // Update is called once per frame
+
+    public override void Start()
+    {
+        base.Start();
+        hudManager = statsDisplay.GetComponent<HUDManager>();
+        print(hudManager);
+    }
+
     public override void Update()
     {
         //Calcul Levitacio
@@ -35,7 +43,7 @@ public class PlayerShip : Ship
                 vola = false;
 
                 Debug.DrawLine(rayPoints[i], hit.point);
-                print("raypoint " + i + " toca");
+                //print("raypoint " + i + " toca");
             }
         }
 
@@ -92,6 +100,8 @@ public class PlayerShip : Ship
         }
         waypointLap = waypointsLap[WPindexLapPointer];
 
+        hudManager.updateTime(stats.StageTime);
+
         //Move camera
         cam.transform.position = transform.TransformPoint(new Vector3(0.0f, 59.6f+(offsetCamera/5.0f), -208.8f-offsetCamera));
     }
@@ -112,7 +122,23 @@ public class PlayerShip : Ship
         transform.position = lastWPLap.position;
         transform.rotation = lastWPLap.rotation;
         rb.isKinematic = false;
-        respawn = 0.0f;
+
+        base.tpShip();
     }
+
+    public override void Damage(float healthDamage, float shieldDamage)
+    {
+        base.Damage(healthDamage, shieldDamage);
+        hudManager.updatehealth(stats.Health, stats.MaxHealth);
+        if (stats.Health == 0f) tpShip();
+    }
+
+    public override void LapPass()
+    {
+        base.LapPass();
+        hudManager.updateLapTime(stats.CurrentLap - 1, stats.LastLapTime);
+        hudManager.updateLap(stats.CurrentLap + 1);
+    }
+
 
 }
