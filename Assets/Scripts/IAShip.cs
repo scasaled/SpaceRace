@@ -107,7 +107,6 @@ public class IAShip : Ship
     {
         if (!triggered && (waypoint != null) && waypoint.name == other.gameObject.name)
         {
-            print(waypoint.name);
             lastWP = other.transform;
             WPindexPointer++;
             if (WPindexPointer >= waypoints.Count)
@@ -124,7 +123,6 @@ public class IAShip : Ship
     {
         if (triggered && other.gameObject.GetComponent<Transform>().name == lastWP.name)
         {
-            print(other.gameObject.name);
             triggered = false;
         }
 

@@ -56,6 +56,8 @@ public class Ship : MonoBehaviour
     // Use this for initialization
     public virtual void Start()
     {
+        ship = gameObject;
+        waypointsLapList = GameObject.Find("WP Laps").transform;
         cam = GetComponentInChildren<Camera>();
         if (cam != null) cameraInitPos = cam.transform.position;
         bc = GetComponent<BoxCollider>();
@@ -67,11 +69,13 @@ public class Ship : MonoBehaviour
         WPindexPointer = 0;
         WPindexLapPointer = 0;
         respawn = 0.0f;
+        controller = transform.Find("Controller").gameObject;
 
         stats = GetComponent<ShipStats>();
-        controller = transform.Find("GameObject").gameObject;
         if (waypointsList != null)
+        {
             foreach (Transform wp in waypointsList) waypoints.Add(wp);
+        }
         foreach (Transform wp in waypointsLapList) waypointsLap.Add(wp);
         lastWPLap = waypointsLap[WPindexLapPointer];
 
@@ -125,7 +129,6 @@ public class Ship : MonoBehaviour
     {
         if (triggered && other.gameObject.GetComponent<Transform>().name == lastWPLap.name)
         {
-            print(other.gameObject.name);
             triggered = false;
         }
     }

@@ -26,6 +26,7 @@ public class ShipStats : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        ship = gameObject;
         lapStartTime = 0f;
         startTime = healthTime = Time.time;
     }

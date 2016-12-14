@@ -10,6 +10,7 @@ public class PlayerShip : Ship
 
     public override void Start()
     {
+        statsDisplay = GameObject.Find("Stats");
         base.Start();
         hudManager = statsDisplay.GetComponent<HUDManager>();
         updateStats();
@@ -58,7 +59,6 @@ public class PlayerShip : Ship
         {
             rb.AddForce(90.0f * -transform.up, ForceMode.Acceleration);
             respawn += Time.deltaTime;
-            print(respawn);
             if (respawn > 2.5f) tpShipPlayer();
         }
         else respawn = 0.0f;
@@ -95,6 +95,7 @@ public class PlayerShip : Ship
         {
 
             if (speed < maxSpeed) speed += acceleration * Time.deltaTime;
+            else if (speed > maxSpeed) speed -= acceleration * Time.deltaTime;
             rb.AddForce(transform.forward * speed);
             offsetCamera = Mathf.Lerp(offsetCamera, 200.0f, Time.deltaTime * 0.5f);
         }
@@ -110,12 +111,19 @@ public class PlayerShip : Ship
         hudManager.updateTime(stats.StageTime);
 
         //Move camera
-        cam.transform.position = transform.TransformPoint(new Vector3(0.0f, 59.6f + (offsetCamera / 5.0f), -208.8f - offsetCamera));
+        if (gameObject.name == "Feisar") cam.transform.position = transform.TransformPoint(new Vector3(0.0f, 59.6f + (offsetCamera / 5.0f), -208.8f - offsetCamera));
+        else if (gameObject.name == "Millenium Falcon") cam.transform.position = transform.TransformPoint(new Vector3(-3500.0f, 10479.0f + (offsetCamera*100 / 5.0f), -23497.0f - offsetCamera*100));
     }
 
     void OnTriggerEnter(Collider other)
     {
         contadorLapsEnter(other);
+        print(other.gameObject.tag);
+        if (other.gameObject.tag == "SpeedBoost")
+        {
+            speed = maxSpeed*1.5f;
+            rb.AddForce(transform.forward * speed);
+        }
     }
 
     void OnTriggerExit(Collider other)

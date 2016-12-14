@@ -24,6 +24,8 @@ public class HUDManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        gameObject.GetComponent<Canvas>().worldCamera = GameObject.FindGameObjectWithTag("Player").transform.Find("Camera").GetComponent<Camera>();
+
         player = GameObject.FindWithTag("Player");
         if (player)
         {
