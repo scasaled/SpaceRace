@@ -99,8 +99,8 @@ public class PlayerShip : Ship
             if (speed < maxSpeed) speed += acceleration * Time.deltaTime;
             else if (speed > maxSpeed) speed -= acceleration * Time.deltaTime;
             rb.AddForce(transform.forward * speed);
-            if (!boost) offsetCamera = Mathf.Lerp(offsetCamera, 200.0f, Time.deltaTime * 0.5f);
-            else offsetCamera = Mathf.Lerp(offsetCamera, 350.0f, Time.deltaTime * 5.0f);
+            if (!boost) offsetCamera = Mathf.Lerp(offsetCamera, 100.0f, Time.deltaTime * 1.5f);
+            else offsetCamera = Mathf.Lerp(offsetCamera, 200.0f, Time.deltaTime * 5.0f);
         }
         else
         {
@@ -108,7 +108,7 @@ public class PlayerShip : Ship
             else if (speed < 0) speed = 0;
             rb.AddForce(transform.forward * speed);
             if (!boost) offsetCamera = Mathf.Lerp(offsetCamera, 0.0f, Time.deltaTime);
-            else offsetCamera = Mathf.Lerp(offsetCamera, 350.0f, Time.deltaTime*5.0f);
+            else offsetCamera = Mathf.Lerp(offsetCamera, 200.0f, Time.deltaTime*5.0f);
         }
         waypointLap = waypointsLap[WPindexLapPointer];
 
@@ -116,7 +116,7 @@ public class PlayerShip : Ship
 
         //Move camera
         if (gameObject.name == "Feisar") cam.transform.position = transform.TransformPoint(new Vector3(0.0f, 59.6f + (offsetCamera / 5.0f), -208.8f - offsetCamera));
-        else if (gameObject.name == "Millenium Falcon") cam.transform.position = transform.TransformPoint(new Vector3(-3500.0f, 10479.0f + (offsetCamera*100 / 5.0f), -23497.0f - offsetCamera*100));
+        else if (gameObject.name == "Millenium Falcon") cam.transform.position = transform.TransformPoint(new Vector3(-3500.0f, 10479.0f + (offsetCamera*150 / 5.0f), -23497.0f - offsetCamera*150));
 
         if (boost) timer += Time.deltaTime;
         if (timer > 1.0f)
@@ -133,7 +133,7 @@ public class PlayerShip : Ship
         if (other.gameObject.tag == "SpeedBoost")
         {
             boost = true;
-            speed = maxSpeed*1.5f;
+            speed = maxSpeed*1.7f;
             rb.AddForce(transform.forward * speed);
         }
     }
