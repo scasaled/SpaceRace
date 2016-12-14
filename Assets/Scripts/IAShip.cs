@@ -42,7 +42,7 @@ public class IAShip : Ship
         for (int i = 0; i < rayPoints.Count; ++i)
         {
             RaycastHit hit;
-            if (Physics.Raycast(rayPoints[i], -transform.up, out hit, 30))
+            if (Physics.Raycast(rayPoints[i], -transform.up, out hit, 30) && hit.transform.tag != "SpeedBoost")
             {
                 ratioSeparacio = ((separacio - hit.distance) / separacio);
                 rigidesa = rb.mass * gravetat / rayPoints.Count;
@@ -95,12 +95,9 @@ public class IAShip : Ship
             controller.transform.rotation = Quaternion.Euler(controller.transform.eulerAngles.x, controller.transform.eulerAngles.y, -transform.eulerAngles.z + girZ);
         }
         if (speed < maxSpeed) speed += acceleration * Time.deltaTime;
+        else if (speed > maxSpeed) speed -= acceleration * Time.deltaTime;
         rb.AddForce(transform.forward * speed);
-
-        if (speed >= maxSpeed)
-        {
-            speed = maxSpeed;
-        }
+        
     }
 
     void OnTriggerEnter(Collider other)
@@ -117,6 +114,13 @@ public class IAShip : Ship
         }
 
         contadorLapsEnter(other);
+        if (other.gameObject.tag == "SpeedBoost")
+        {
+            print("entra");
+            speed = maxSpeed * 1.4f;
+            print(speed);
+            rb.AddForce(transform.forward * speed);
+        }
     }
 
     void OnTriggerExit(Collider other)

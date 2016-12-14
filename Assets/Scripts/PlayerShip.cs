@@ -7,6 +7,8 @@ public class PlayerShip : Ship
     public GameObject statsDisplay;
     private HUDManager hudManager;
     private float offsetCamera = 0.0f;
+    bool boost = false;
+    float timer = 0.0f;
 
     public override void Start()
     {
@@ -39,7 +41,7 @@ public class PlayerShip : Ship
         for (int i = 0; i < rayPoints.Count; ++i)
         {
             RaycastHit hit;
-            if (Physics.Raycast(rayPoints[i], -transform.up, out hit, 30))
+            if (Physics.Raycast(rayPoints[i], -transform.up, out hit, 30) && hit.transform.tag != "SpeedBoost")
             {
                 ratioSeparacio = ((separacio - hit.distance) / separacio);
                 rigidesa = rb.mass * gravetat / rayPoints.Count;
@@ -97,14 +99,16 @@ public class PlayerShip : Ship
             if (speed < maxSpeed) speed += acceleration * Time.deltaTime;
             else if (speed > maxSpeed) speed -= acceleration * Time.deltaTime;
             rb.AddForce(transform.forward * speed);
-            offsetCamera = Mathf.Lerp(offsetCamera, 200.0f, Time.deltaTime * 0.5f);
+            if (!boost) offsetCamera = Mathf.Lerp(offsetCamera, 200.0f, Time.deltaTime * 0.5f);
+            else offsetCamera = Mathf.Lerp(offsetCamera, 350.0f, Time.deltaTime * 5.0f);
         }
         else
         {
             if (speed > 0) speed -= acceleration * Time.deltaTime;
             else if (speed < 0) speed = 0;
             rb.AddForce(transform.forward * speed);
-            offsetCamera = Mathf.Lerp(offsetCamera, 0.0f, Time.deltaTime);
+            if (!boost) offsetCamera = Mathf.Lerp(offsetCamera, 0.0f, Time.deltaTime);
+            else offsetCamera = Mathf.Lerp(offsetCamera, 350.0f, Time.deltaTime*5.0f);
         }
         waypointLap = waypointsLap[WPindexLapPointer];
 
@@ -113,6 +117,13 @@ public class PlayerShip : Ship
         //Move camera
         if (gameObject.name == "Feisar") cam.transform.position = transform.TransformPoint(new Vector3(0.0f, 59.6f + (offsetCamera / 5.0f), -208.8f - offsetCamera));
         else if (gameObject.name == "Millenium Falcon") cam.transform.position = transform.TransformPoint(new Vector3(-3500.0f, 10479.0f + (offsetCamera*100 / 5.0f), -23497.0f - offsetCamera*100));
+
+        if (boost) timer += Time.deltaTime;
+        if (timer > 1.0f)
+        {
+            boost = false;
+            timer = 0.0f;
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -121,6 +132,7 @@ public class PlayerShip : Ship
         print(other.gameObject.tag);
         if (other.gameObject.tag == "SpeedBoost")
         {
+            boost = true;
             speed = maxSpeed*1.5f;
             rb.AddForce(transform.forward * speed);
         }
