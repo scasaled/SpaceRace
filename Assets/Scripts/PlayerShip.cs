@@ -12,6 +12,7 @@ public class PlayerShip : Ship
 
     public override void Start()
     {
+        print(transform.rotation);
         statsDisplay = GameObject.Find("Stats");
         base.Start();
         hudManager = statsDisplay.GetComponent<HUDManager>();
