@@ -101,7 +101,6 @@ public class MenuManager : MonoBehaviour
     public void MapSelection(int map)
     {
         selectedMap = map;
-        if (map == 1) SceneManager.LoadScene("Scene 2");
-        else if (map == 2) SceneManager.LoadScene("Scene 3");
+        SceneManager.LoadScene(Constants.nameScenes[map - 1]);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class Ship : MonoBehaviour
 {
@@ -44,7 +45,7 @@ public class Ship : MonoBehaviour
     protected Transform lastWP;
     protected Transform lastWPLap;
     protected int WPindexPointer;
-    protected int WPindexLapPointer;
+    public int WPindexLapPointer;
 
     private bool triggered;
     private bool first;
@@ -52,7 +53,7 @@ public class Ship : MonoBehaviour
     protected Camera cam;
     protected Vector3 cameraInitPos;
 
-    private int actualPos;
+    public int actualPos;
 
     // Use this for initialization
     public virtual void Start()
@@ -122,7 +123,8 @@ public class Ship : MonoBehaviour
             lastWPLap = other.transform;
 
             triggered = true;
-
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null) player.GetComponent<Ship>().actualPos = Ranking.calculatePos(player);
         }
     }
 
@@ -153,7 +155,41 @@ public class Ship : MonoBehaviour
 
     public virtual void LapPass()
     {
+        int scene = SceneManager.GetActiveScene().name == Constants.nameScenes[0] ? 0 : 1;
         stats.LapPass();
+        if (stats.CurrentLap == Constants.scenes[scene].totalLaps)
+        {
+            if (gameObject.tag != "Player")
+            {
+                Ranking.addShip(gameObject);
+                Destroy(gameObject);
+            }
+            else
+            {
+
+                Ranking.addShip(gameObject);
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+                GameObject[] aux = new GameObject[enemies.Length + 1];
+                foreach (GameObject enem in enemies)
+                {
+                    if (enem != null)
+                    {
+                        print(Ranking.calculatePos(enem)-1);
+                        aux[Ranking.calculatePos(enem)-1] = enem;
+                    }
+                }
+                foreach (GameObject trol in aux)
+                {
+                    if (trol != null)
+                    {
+                        Ranking.addShip(trol);
+                        Destroy(trol);
+                    }
+                }
+                Ranking.active();
+                Destroy(gameObject);
+            }
+        }
     }
 
     protected void tpShip(Vector3 position, Quaternion rotation)

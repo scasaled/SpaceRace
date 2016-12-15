@@ -14,7 +14,7 @@ public class HUDManager : MonoBehaviour
     private Text currentPosText;
 
     public int totalLaps;
-    public int maxPos;
+    public int totalShips;
 
     private int lapTimeToShow;
 
@@ -34,7 +34,8 @@ public class HUDManager : MonoBehaviour
         currentPosText = canvasObject.transform.FindChild("Position/CurrentPos").GetComponent<Text>();
 
         canvasObject.transform.FindChild("Laps/TotalLaps").GetComponent<Text>().text = totalLaps.ToString();
-        canvasObject.transform.FindChild("Position/MaxPos").GetComponent<Text>().text = maxPos.ToString();
+        canvasObject.transform.FindChild("Position/MaxPos").GetComponent<Text>().text = totalShips.ToString();
+        
     }
 
     public void setCamera(Camera camera)
@@ -88,9 +89,9 @@ public class HUDManager : MonoBehaviour
         return min + ":" + (time % 60).ToString("00.0");
     }
 
-    public void setMaxPos(int mPos)
+    public void setTotalShips(int mPos)
     {
-        maxPos = mPos;
+        totalShips = mPos;
     }
 
     public void updatePos(int actualPos)

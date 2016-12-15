@@ -13,6 +13,8 @@ public static class Constants
 
     public static float shootDelay = 0.5f;
 
+    public static string[] nameScenes = new string[2] { "Mapa 1", "Mapa 2"};
+
     public struct ShipInfo
     {
         public string name;
@@ -42,13 +44,13 @@ public static class Constants
     }
 
     public static sceneInit[] scenes = new sceneInit[2]{
+        new sceneInit(1,
+            new ShipInfo(nameShips[0],new Vector3(2446.001f, 1647.003f, 5180.001f), new Quaternion(0.1f, -1.0f, 0.0f, 0.1f)),
+            new ShipInfo(nameShips[1],new Vector3(2444.45f, 1647.229f, 5166.386f), new Quaternion(0.1f, -1.0f, 0.0f, 0.1f))
+        ),
         new sceneInit(3,
             new ShipInfo(nameShips[0],new Vector3(3053f, 3667.9f, -1881.4f), new Quaternion(0f, -0.8f, -0.1f, 0.6f)),
             new ShipInfo(nameShips[1],new Vector3(3063.9f, 3665.3f, -1869.4f), new Quaternion(0.1f, -0.8f, -0.1f, 0.5f))
-        ),
-        new sceneInit(6,
-            new ShipInfo(nameShips[0],new Vector3(2446.001f, 1647.003f, 5180.001f), new Quaternion(0.1f, -1.0f, 0.0f, 0.1f)),
-            new ShipInfo(nameShips[1],new Vector3(2444.45f, 1647.229f, 5166.386f), new Quaternion(0.1f, -1.0f, 0.0f, 0.1f))
         )
     };
 

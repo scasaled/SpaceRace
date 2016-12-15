@@ -97,7 +97,6 @@ public class IAShip : Ship
         if (speed < maxSpeed) speed += acceleration * Time.deltaTime;
         else if (speed > maxSpeed) speed -= acceleration * Time.deltaTime;
         rb.AddForce(transform.forward * speed);
-        
     }
 
     void OnTriggerEnter(Collider other)
@@ -116,9 +115,7 @@ public class IAShip : Ship
         contadorLapsEnter(other);
         if (other.gameObject.tag == "SpeedBoost")
         {
-            print("entra");
             speed = maxSpeed * 1.4f;
-            print(speed);
             rb.AddForce(transform.forward * speed);
         }
     }

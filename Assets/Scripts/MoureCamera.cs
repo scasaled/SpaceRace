@@ -16,6 +16,5 @@ public class MoureCamera : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         transform.position = nau.transform.position + offset;
-        //print(nau.transform.position);
     }
 }

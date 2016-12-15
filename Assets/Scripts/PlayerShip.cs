@@ -11,7 +11,6 @@ public class PlayerShip : Ship
 
     public override void Start()
     {
-        print(transform.rotation);
         base.Start();
         updateStats();
     }
@@ -23,6 +22,7 @@ public class PlayerShip : Ship
 
     private void updateStats()
     {
+        actualPos = 3;
         hudManager.updateHealth(stats.Health, stats.MaxHealth);
         hudManager.updateShield(stats.Shield);
     }
@@ -55,7 +55,6 @@ public class PlayerShip : Ship
                 vola = false;
 
                 Debug.DrawLine(rayPoints[i], hit.point);
-                //print("raypoint " + i + " toca");
             }
         }
 
@@ -130,6 +129,8 @@ public class PlayerShip : Ship
         int velocity = (int)rb.transform.InverseTransformDirection(rb.velocity).z;
         velocity /= 5;
         hudManager.updateSpeed(velocity);
+
+        hudManager.updatePos(actualPos);
     }
 
     void OnTriggerEnter(Collider other)

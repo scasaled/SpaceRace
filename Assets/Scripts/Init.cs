@@ -18,6 +18,7 @@ public class Init : MonoBehaviour
         ship.name = shipInfo.name;
         
         stats.GetComponent<HUDManager>().setTotalLaps(Constants.scenes[MenuManager.selectedMap - 1].totalLaps);
+        stats.GetComponent<HUDManager>().setTotalShips(GameObject.FindGameObjectsWithTag("Enemy").Length + 1);
         stats.GetComponent<HUDManager>().setCamera(ship.transform.FindChild("Camera").GetComponent<Camera>());
         ship.GetComponent<PlayerShip>().setStats(stats);
 
