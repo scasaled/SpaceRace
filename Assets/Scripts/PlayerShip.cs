@@ -125,13 +125,11 @@ public class PlayerShip : Ship
             boost = false;
             timer = 0.0f;
         }
-        print(cam);
     }
 
     void OnTriggerEnter(Collider other)
     {
         contadorLapsEnter(other);
-        print(other.gameObject.tag);
         if (other.gameObject.tag == "SpeedBoost")
         {
             boost = true;
