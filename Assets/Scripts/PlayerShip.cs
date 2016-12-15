@@ -116,8 +116,8 @@ public class PlayerShip : Ship
         hudManager.updateTime(stats.StageTime);
 
         //Move camera
-        if (gameObject.name == "Feisar") cam.transform.position = transform.TransformPoint(new Vector3(0.0f, 59.6f + (offsetCamera / 5.0f), -208.8f - offsetCamera));
-        else if (gameObject.name == "Millenium Falcon") cam.transform.position = transform.TransformPoint(new Vector3(-3500.0f, 10479.0f + (offsetCamera*150 / 5.0f), -23497.0f - offsetCamera*150));
+        if (gameObject.name == "Feisar(Clone)") cam.transform.position = transform.TransformPoint(new Vector3(0.0f, 59.6f + (offsetCamera / 5.0f), -208.8f - offsetCamera));
+        else if (gameObject.name == "Millenium Falcon(Clone)") cam.transform.position = transform.TransformPoint(new Vector3(-3500.0f, 10479.0f + (offsetCamera*150 / 5.0f), -23497.0f - offsetCamera*150));
 
         if (boost) timer += Time.deltaTime;
         if (timer > 1.0f)
@@ -125,6 +125,7 @@ public class PlayerShip : Ship
             boost = false;
             timer = 0.0f;
         }
+        print(cam);
     }
 
     void OnTriggerEnter(Collider other)
