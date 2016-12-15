@@ -13,6 +13,7 @@ public class MenuManager : MonoBehaviour
     public List<Transform> bars = new List<Transform>();
 
     public static int selectedShip;
+    public static int selectedMap;
 
     private struct bar
     {
@@ -90,8 +91,8 @@ public class MenuManager : MonoBehaviour
 
     public void MapSelection(int map)
     {
-        
+        selectedMap = map;
         if (map == 1) SceneManager.LoadScene("Scene 2");
-        else if (map == 1) SceneManager.LoadScene("Scene 3");
+        else if (map == 2) SceneManager.LoadScene("Scene 3");
     }
 }

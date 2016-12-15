@@ -14,10 +14,9 @@ public class Init : MonoBehaviour
         GameObject stats = (GameObject)Instantiate(Resources.Load("Stats", typeof(GameObject)));
         stats.name = "Stats";
         GameObject ship;
-        if (MenuManager.selectedShip == 1)
-            ship = (GameObject)Instantiate(Resources.Load("Feisar", typeof(GameObject)), new Vector3(3053f, 3667.9f, -1881.4f), new Quaternion(0f, -0.8f, -0.1f, 0.6f));
-        else
-            ship = (GameObject)Instantiate(Resources.Load("Millenium Falcon", typeof(GameObject)), new Vector3(3063.9f, 3665.3f, -1869.4f), new Quaternion(0.1f, -0.8f, -0.1f, 0.5f));
+
+        Constants.ShipInfo shipInfo = Constants.scenes[MenuManager.selectedMap - 1].ship[MenuManager.selectedShip - 1];
+        ship = (GameObject)Instantiate(Resources.Load(shipInfo.name, typeof(GameObject)), shipInfo.position, shipInfo.rotation);
 
         stats.GetComponent<HUDManager>().setPlayer(ship);
         StartCoroutine(waitSec());
