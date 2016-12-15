@@ -4,9 +4,6 @@ using System.Collections.Generic;
 
 public class ShipStats : MonoBehaviour
 {
-
-    public GameObject ship;
-
     private float maxHealth = 100f;
     private float health = 100f;
     private float maxShield = 100f;
@@ -26,7 +23,6 @@ public class ShipStats : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        ship = gameObject;
         lapStartTime = 0f;
         startTime = healthTime = Time.time;
     }

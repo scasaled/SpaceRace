@@ -12,8 +12,8 @@ public class MenuManager : MonoBehaviour
     public List<Ship> ships = new List<Ship>();
     public List<Transform> bars = new List<Transform>();
 
-    public static int selectedShip;
-    public static int selectedMap;
+    public static int selectedShip = 1;
+    public static int selectedMap = 1;
 
     private struct bar
     {
@@ -46,8 +46,10 @@ public class MenuManager : MonoBehaviour
                 );
 
         maxs = new props();
-
-        maxs.maxSpeed = 156f;
+        maxs.maxSpeed = 0f;
+        for (int i = 0; i < Constants.speedShips.Length; ++i)
+            if (maxs.maxSpeed < Constants.speedShips[i]) 
+                maxs.maxSpeed = Constants.speedShips[i];
 
         foreach (Ship ship in ships)
         {
@@ -65,11 +67,18 @@ public class MenuManager : MonoBehaviour
 
         CurrentMenu = menu;
         CurrentMenu.IsOpen = true;
+
+        if (menu.name == "SelectShip Menu")
+        {
+            Button ship1Button = menu.transform.FindChild("Panel/GameObject/Options/Ship1").GetComponent<Button>();
+            ship1Button.Select();
+            ship1Button.onClick.Invoke();
+        }
     }
 
     public void ShipSelection(int ship)
     {
-        float speed = ((ship == 1) ? 136f : 156f);
+        float speed = Constants.speedShips[ship - 1];
         float ratio = Mathf.Max(0, speed / maxs.maxSpeed);
         barsInfo[0].text.text = speed.ToString("0");
         barsInfo[0].transfromBar.localScale = new Vector3(ratio, 1, 1);

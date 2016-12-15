@@ -4,17 +4,15 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 public class HUDManager : MonoBehaviour
 {
-    private GameObject player;
-    private Rigidbody rbPlayer;
     private Text vel;
     private Text currentLapText;
-    private Text totalLaps;
     private Text shieldText;
     private Image shieldBar;
     private Text healthText;
     private Image healthBar;
     private Text time;
 
+    public int totalLaps;
 
     private int lapTimeToShow;
 
@@ -28,35 +26,27 @@ public class HUDManager : MonoBehaviour
         healthBar = canvasObject.transform.FindChild("HealthBar/CurrentHealthBar").GetComponent<Image>();
         vel = canvasObject.transform.FindChild("Velocity/Velocity").GetComponent<Text>();
         currentLapText = canvasObject.transform.FindChild("Laps/CurrentLap").GetComponent<Text>();
-        totalLaps = canvasObject.transform.FindChild("Laps/TotalLaps").GetComponent<Text>();
         shieldText = canvasObject.transform.FindChild("ShieldBar/Center/Shield").GetComponent<Text>();
         shieldBar = canvasObject.transform.FindChild("ShieldBar/CurrentShieldBar").GetComponent<Image>();
         time = canvasObject.transform.FindChild("Time/Time").GetComponent<Text>();
 
+        canvasObject.transform.FindChild("Laps/TotalLaps").GetComponent<Text>().text = totalLaps.ToString();
     }
 
-    public void setPlayer(GameObject ship)
+    public void setCamera(Camera camera)
     {
-        player = ship;
-        rbPlayer = player.GetComponent<Rigidbody>();
-        gameObject.GetComponent<Canvas>().worldCamera = ship.transform.FindChild("Camera").GetComponent<Camera>();
+        gameObject.GetComponent<Canvas>().worldCamera = camera;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (player)
-        {
-            int speed = (int)rbPlayer.transform.InverseTransformDirection(rbPlayer.velocity).z;
-            speed /= 5;
-            vel.text = Mathf.Max(0, speed).ToString();
-        }
-    }
     public void setTotalLaps(int laps)
     {
-        totalLaps.text = laps.ToString();
+        totalLaps = laps;
     }
 
+    public void updateSpeed(float speed)
+    {
+        vel.text = Mathf.Max(0, speed).ToString();
+    }
 
     public void updateTime(float stageTime)
     {
@@ -72,7 +62,7 @@ public class HUDManager : MonoBehaviour
 
     public void updateShield(float shield)
     {
-        shieldText.text = shield.ToString() + "%";
+        shieldText.text = shield.ToString("0") + "%";
         shieldBar.fillAmount = shield;
     }
 

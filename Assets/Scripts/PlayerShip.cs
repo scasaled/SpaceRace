@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class PlayerShip : Ship
 {
-    public GameObject statsDisplay;
     private HUDManager hudManager;
     private float offsetCamera = 0.0f;
     bool boost = false;
@@ -13,10 +12,13 @@ public class PlayerShip : Ship
     public override void Start()
     {
         print(transform.rotation);
-        statsDisplay = GameObject.Find("Stats");
         base.Start();
-        hudManager = statsDisplay.GetComponent<HUDManager>();
         updateStats();
+    }
+
+    public void setStats(GameObject stats)
+    {
+        hudManager = stats.GetComponent<HUDManager>();
     }
 
     private void updateStats()
@@ -116,8 +118,8 @@ public class PlayerShip : Ship
         hudManager.updateTime(stats.StageTime);
 
         //Move camera
-        if (gameObject.name == "Feisar(Clone)") cam.transform.position = transform.TransformPoint(new Vector3(0.0f, 59.6f + (offsetCamera / 5.0f), -208.8f - offsetCamera));
-        else if (gameObject.name == "Millenium Falcon(Clone)") cam.transform.position = transform.TransformPoint(new Vector3(-3500.0f, 10479.0f + (offsetCamera*150 / 5.0f), -23497.0f - offsetCamera*150));
+        if (gameObject.name == Constants.nameShips[0]) cam.transform.position = transform.TransformPoint(new Vector3(0.0f, 59.6f + (offsetCamera / 5.0f), -208.8f - offsetCamera));
+        else if (gameObject.name == Constants.nameShips[1]) cam.transform.position = transform.TransformPoint(new Vector3(-3500.0f, 10479.0f + (offsetCamera * 150 / 5.0f), -23497.0f - offsetCamera * 150));
 
         if (boost) timer += Time.deltaTime;
         if (timer > 1.0f)
@@ -125,6 +127,9 @@ public class PlayerShip : Ship
             boost = false;
             timer = 0.0f;
         }
+        int velocity = (int)rb.transform.InverseTransformDirection(rb.velocity).z;
+        velocity /= 5;
+        hudManager.updateSpeed(velocity);
     }
 
     void OnTriggerEnter(Collider other)
@@ -153,6 +158,7 @@ public class PlayerShip : Ship
     {
         base.Damage(healthDamage, shieldDamage);
         hudManager.updateHealth(stats.Health, stats.MaxHealth);
+        hudManager.updateShield(stats.Shield);
         if (stats.Health == 0f) tpShipPlayer();
     }
 

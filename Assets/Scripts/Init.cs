@@ -6,26 +6,30 @@ public class Init : MonoBehaviour
 {
     public Text text;
     private System.Timers.Timer timer;
-    private int countDown = 3;
+    private int countDown = Constants.CountDown;
 
     void Start()
     {
-        string shipType = MenuManager.selectedShip == 1 ? "Feisar" : "Millenium Falcon";
         GameObject stats = (GameObject)Instantiate(Resources.Load("Stats", typeof(GameObject)));
         stats.name = "Stats";
-        GameObject ship;
 
         Constants.ShipInfo shipInfo = Constants.scenes[MenuManager.selectedMap - 1].ship[MenuManager.selectedShip - 1];
-        ship = (GameObject)Instantiate(Resources.Load(shipInfo.name, typeof(GameObject)), shipInfo.position, shipInfo.rotation);
+        GameObject ship = (GameObject)Instantiate(Resources.Load(shipInfo.name, typeof(GameObject)), shipInfo.position, shipInfo.rotation);
+        ship.name = shipInfo.name;
+        
+        stats.GetComponent<HUDManager>().setTotalLaps(Constants.scenes[MenuManager.selectedMap - 1].totalLaps);
+        stats.GetComponent<HUDManager>().setCamera(ship.transform.FindChild("Camera").GetComponent<Camera>());
+        ship.GetComponent<PlayerShip>().setStats(stats);
 
-        stats.GetComponent<HUDManager>().setPlayer(ship);
-        StartCoroutine(waitSec());
+        stats.SetActive(false);
+        StartCoroutine(waitSec(stats));
     }
 
-    private IEnumerator waitSec()
+    private IEnumerator waitSec(GameObject stats)
     {
         enableScripts(false);
         yield return new WaitForSeconds(2);
+        stats.SetActive(true);
         gameObject.GetComponent<AudioSource>().Play();
         text.enabled = true;
         timer = new System.Timers.Timer(1000);

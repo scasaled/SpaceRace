@@ -23,7 +23,7 @@ public class Impact : MonoBehaviour
             Destroy(obj, duration);
             Destroy(gameObject);
 
-            other.gameObject.GetComponent<Ship>().Damage(10f,15f);
+            other.gameObject.GetComponent<Ship>().Damage(Constants.impactDamage);
         }
     }
 }

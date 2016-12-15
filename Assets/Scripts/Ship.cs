@@ -49,14 +49,12 @@ public class Ship : MonoBehaviour
     private bool triggered;
     private bool first;
     public float respawn;
-    public GameObject ship;
     protected Camera cam;
     protected Vector3 cameraInitPos;
 
     // Use this for initialization
     public virtual void Start()
     {
-        ship = gameObject;
         waypointsLapList = GameObject.Find("WP Laps").transform;
         cam = GetComponentInChildren<Camera>();
         if (cam != null) cameraInitPos = cam.transform.position;
@@ -72,6 +70,7 @@ public class Ship : MonoBehaviour
         controller = transform.Find("Controller").gameObject;
 
         stats = GetComponent<ShipStats>();
+        
         if (waypointsList != null)
         {
             foreach (Transform wp in waypointsList) waypoints.Add(wp);

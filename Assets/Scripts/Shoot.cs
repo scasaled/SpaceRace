@@ -31,7 +31,7 @@ public class Shoot : MonoBehaviour
             tmpRigidBody.transform.Rotate(objProjectile.transform.eulerAngles);
             tmpRigidBody.AddForce(transform.forward * (velocity+gameObject.GetComponent<Ship>().speed*100));
 
-            lastTime = 0.5f;
+            lastTime = Constants.shootDelay;
         }
     }
 
