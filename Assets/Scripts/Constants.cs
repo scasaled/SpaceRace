@@ -7,13 +7,14 @@ public static class Constants
     public static string[] nameShips = new string[2] { "Feisar", "Millenium Falcon" };
 
     public static int CountDown = 3;
-    public static float impactDamage = 25f;
-    public static float[] collisionDamage = new float[2] {0.05f, 0.05f};
+    public static float impactDamage = 30f;
+    public static float[] collisionDamage = new float[2] {0.2f, 0.2f};
     public static float[] speedShips = new float[2] { 136f, 156f };
 
     public static float shootDelay = 0.5f;
 
     public static string[] nameScenes = new string[2] { "Mapa 1", "Mapa 2"};
+    public static string menuScene = "Menu Scene";
 
     public struct ShipInfo
     {

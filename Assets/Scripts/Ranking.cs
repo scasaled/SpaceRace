@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class Ranking : MonoBehaviour {
 
@@ -29,11 +30,11 @@ public class Ranking : MonoBehaviour {
     // Use this for initialization
     void Start () {
         GameObject canvasObject = GameObject.FindGameObjectWithTag("Ranking");
-        posPlayer = canvasObject.transform.FindChild("Canvas/Panel/PosPlayer").GetComponent<Text>();
-        timePlayer = canvasObject.transform.FindChild("Canvas/Panel/TimePlayer").GetComponent<Text>();
-        shipsText[0] = canvasObject.transform.FindChild("Canvas/Panel/Ship1").GetComponent<Text>();
-        shipsText[1] = canvasObject.transform.FindChild("Canvas/Panel/Ship2").GetComponent<Text>();
-        shipsText[2] = canvasObject.transform.FindChild("Canvas/Panel/Ship3").GetComponent<Text>();
+        posPlayer = canvasObject.transform.FindChild("Canvas/Panel/Position/PosPlayer").GetComponent<Text>();
+        timePlayer = canvasObject.transform.FindChild("Canvas/Panel/Time/TimePlayer").GetComponent<Text>();
+        shipsText[0] = canvasObject.transform.FindChild("Canvas/Panel/Positions/Panel/Ships/Ship1").GetComponent<Text>();
+        shipsText[1] = canvasObject.transform.FindChild("Canvas/Panel/Positions/Panel/Ships/Ship2").GetComponent<Text>();
+        shipsText[2] = canvasObject.transform.FindChild("Canvas/Panel/Positions/Panel/Ships/Ship3").GetComponent<Text>();
     }
 	
 	// Update is called once per frame
@@ -93,5 +94,10 @@ public class Ranking : MonoBehaviour {
             shipsText[i].text = r.ship;
             ++i;
         }
+    }
+
+    public void returnMenu()
+    {
+        SceneManager.LoadScene(Constants.menuScene);
     }
 }

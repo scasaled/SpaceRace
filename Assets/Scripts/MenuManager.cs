@@ -76,6 +76,11 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    public void exit()
+    {
+        Application.Quit();
+    }
+
     public void ShipSelection(int ship)
     {
         float speed = Constants.speedShips[ship - 1];
