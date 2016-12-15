@@ -100,7 +100,7 @@ public class Ship : MonoBehaviour
                 Invoke("SparksFinished", duration);
                 isSparksPlaying = true;
             }
-            Damage(0.05f, 0.05f);
+            Damage(Constants.collisionDamage[0], Constants.collisionDamage[1]);
         }
     }
 
@@ -130,6 +130,17 @@ public class Ship : MonoBehaviour
         if (triggered && other.gameObject.GetComponent<Transform>().name == lastWPLap.name)
         {
             triggered = false;
+        }
+    }
+
+    public virtual void Damage(float damage)
+    {
+        if (stats.Shield >= damage)
+            stats.Shield -= damage;
+        else
+        {
+            stats.Shield = 0f;
+            stats.Health -= damage - stats.Shield;
         }
     }
 
