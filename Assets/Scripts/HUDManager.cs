@@ -18,33 +18,28 @@ public class HUDManager : MonoBehaviour
 
     private int lapTimeToShow;
 
-
-
-
     // Use this for initialization
     void Start()
     {
-        gameObject.GetComponent<Canvas>().worldCamera = GameObject.FindGameObjectWithTag("Player").transform.Find("Camera").GetComponent<Camera>();
+        lapTimeToShow = 0;
 
-        player = GameObject.FindWithTag("Player");
-        if (player)
-        {
-            lapTimeToShow = 0;
+        GameObject canvasObject = GameObject.FindGameObjectsWithTag("MainCanvas")[0];
+        healthText = canvasObject.transform.FindChild("HealthBar/Health").GetComponent<Text>();
+        healthBar = canvasObject.transform.FindChild("HealthBar/CurrentHealthBar").GetComponent<Image>();
+        vel = canvasObject.transform.FindChild("Velocity/Velocity").GetComponent<Text>();
+        currentLapText = canvasObject.transform.FindChild("Laps/CurrentLap").GetComponent<Text>();
+        totalLaps = canvasObject.transform.FindChild("Laps/TotalLaps").GetComponent<Text>();
+        shieldText = canvasObject.transform.FindChild("ShieldBar/Center/Shield").GetComponent<Text>();
+        shieldBar = canvasObject.transform.FindChild("ShieldBar/CurrentShieldBar").GetComponent<Image>();
+        time = canvasObject.transform.FindChild("Time/Time").GetComponent<Text>();
 
-            GameObject canvasObject = GameObject.FindGameObjectsWithTag("MainCanvas")[0];
-            healthText = canvasObject.transform.FindChild("HealthBar/Health").GetComponent<Text>();
-            healthBar = canvasObject.transform.FindChild("HealthBar/CurrentHealthBar").GetComponent<Image>();
-            vel = canvasObject.transform.FindChild("Velocity/Velocity").GetComponent<Text>();
-            currentLapText = canvasObject.transform.FindChild("Laps/CurrentLap").GetComponent<Text>();
-            totalLaps = canvasObject.transform.FindChild("Laps/TotalLaps").GetComponent<Text>();
-            shieldText = canvasObject.transform.FindChild("ShieldBar/Center/Shield").GetComponent<Text>();
-            shieldBar = canvasObject.transform.FindChild("ShieldBar/CurrentShieldBar").GetComponent<Image>();
-            time = canvasObject.transform.FindChild("Time/Time").GetComponent<Text>();
+    }
 
-            rbPlayer = player.GetComponent<Rigidbody>();
-
-            totalLaps.text = "3";
-        }
+    public void setPlayer(GameObject ship)
+    {
+        player = ship;
+        rbPlayer = player.GetComponent<Rigidbody>();
+        gameObject.GetComponent<Canvas>().worldCamera = ship.transform.FindChild("Camera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -52,13 +47,16 @@ public class HUDManager : MonoBehaviour
     {
         if (player)
         {
-
             int speed = (int)rbPlayer.transform.InverseTransformDirection(rbPlayer.velocity).z;
             speed /= 5;
             vel.text = Mathf.Max(0, speed).ToString();
-
         }
     }
+    public void setTotalLaps(int laps)
+    {
+        totalLaps.text = laps.ToString();
+    }
+
 
     public void updateTime(float stageTime)
     {

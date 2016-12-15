@@ -12,6 +12,8 @@ public class MenuManager : MonoBehaviour
     public List<Ship> ships = new List<Ship>();
     public List<Transform> bars = new List<Transform>();
 
+    public static int selectedShip;
+
     private struct bar
     {
         public Text text;
@@ -82,16 +84,14 @@ public class MenuManager : MonoBehaviour
         ratio = Mathf.Max(0, ships[ship - 1].maneig / maxs.grip);
         barsInfo[3].text.text = ships[ship - 1].maneig.ToString();
         barsInfo[3].transfromBar.localScale = new Vector3(ratio, 1, 1);
+
+        selectedShip = ship;
     }
 
     public void MapSelection(int map)
     {
-        StartGame();
-    }
-
-    public void StartGame()
-    {
-        //SceneManager.LoadScene("Scene2");
-
+        
+        if (map == 1) SceneManager.LoadScene("Scene 2");
+        else if (map == 1) SceneManager.LoadScene("Scene 3");
     }
 }
