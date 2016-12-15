@@ -68,7 +68,6 @@ public class Ranking : MonoBehaviour {
 
     static public void addShip(GameObject ship)
     {
-        print("Ranking " + results.Count);
         Rank r = new Rank(ship.name);
         results.Add(r);
         if (ship.tag == "Player")

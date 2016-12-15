@@ -174,7 +174,6 @@ public class Ship : MonoBehaviour
                 {
                     if (enem != null)
                     {
-                        print(Ranking.calculatePos(enem)-1);
                         aux[Ranking.calculatePos(enem)-1] = enem;
                     }
                 }
@@ -213,5 +212,14 @@ public class Ship : MonoBehaviour
         respawn = 0.0f;
         stats.restartHealth();
         stats.restartShield();
+    }
+
+    protected void triggerSphereShield(Collider other)
+    {
+        if (other.gameObject.tag == "Sphere Shield")
+        {
+            if (stats.Shield < 80.0f) stats.Shield += 20.0f;
+            else stats.Shield = 100.0f;
+        }
     }
 }

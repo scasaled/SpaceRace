@@ -142,6 +142,13 @@ public class PlayerShip : Ship
             speed = maxSpeed*1.7f;
             rb.AddForce(transform.forward * speed);
         }
+
+        if (other.gameObject.tag == "Sphere Shield")
+        {
+            if (stats.Shield < 80.0f) stats.Shield += 20.0f;
+            else stats.Shield = 100.0f;
+            hudManager.updateShield(stats.Shield);
+        }
     }
 
     void OnTriggerExit(Collider other)

@@ -118,6 +118,7 @@ public class IAShip : Ship
             speed = maxSpeed * 1.4f;
             rb.AddForce(transform.forward * speed);
         }
+        triggerSphereShield(other);
     }
 
     void OnTriggerExit(Collider other)
