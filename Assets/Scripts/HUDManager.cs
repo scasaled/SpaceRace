@@ -11,8 +11,10 @@ public class HUDManager : MonoBehaviour
     private Text healthText;
     private Image healthBar;
     private Text time;
+    private Text currentPosText;
 
     public int totalLaps;
+    public int maxPos;
 
     private int lapTimeToShow;
 
@@ -29,8 +31,10 @@ public class HUDManager : MonoBehaviour
         shieldText = canvasObject.transform.FindChild("ShieldBar/Center/Shield").GetComponent<Text>();
         shieldBar = canvasObject.transform.FindChild("ShieldBar/CurrentShieldBar").GetComponent<Image>();
         time = canvasObject.transform.FindChild("Time/Time").GetComponent<Text>();
+        currentPosText = canvasObject.transform.FindChild("Position/CurrentPos").GetComponent<Text>();
 
         canvasObject.transform.FindChild("Laps/TotalLaps").GetComponent<Text>().text = totalLaps.ToString();
+        canvasObject.transform.FindChild("Position/MaxPos").GetComponent<Text>().text = maxPos.ToString();
     }
 
     public void setCamera(Camera camera)
@@ -84,4 +88,13 @@ public class HUDManager : MonoBehaviour
         return min + ":" + (time % 60).ToString("00.0");
     }
 
+    public void setMaxPos(int mPos)
+    {
+        maxPos = mPos;
+    }
+
+    public void updatePos(int actualPos)
+    {
+        currentPosText.text = actualPos.ToString();
+    }
 }

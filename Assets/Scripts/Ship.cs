@@ -52,6 +52,8 @@ public class Ship : MonoBehaviour
     protected Camera cam;
     protected Vector3 cameraInitPos;
 
+    private int actualPos;
+
     // Use this for initialization
     public virtual void Start()
     {
