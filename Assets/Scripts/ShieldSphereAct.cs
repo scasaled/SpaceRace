@@ -5,11 +5,10 @@ public class ShieldSphereAct : MonoBehaviour {
 
     private GameObject[] shieldBalls;
     private float[] timers;
-    private float spawnTime;
+    private float spawnTime = Constants.SphereSpawnTime;
 
 	// Use this for initialization
 	void Start () {
-        spawnTime = 40.0f;
         shieldBalls = new GameObject[transform.childCount];
         int i = 0;
         foreach (Transform child in transform)
@@ -33,18 +32,23 @@ public class ShieldSphereAct : MonoBehaviour {
             if (ball.GetComponent<SphereShieldAnim>().isTrigger())
             {
                 ball.GetComponent<SphereShieldAnim>().setTrigger(false);
-                ball.SetActive(false);
                 timers[i] = 0.0f;
+                StartCoroutine(disableBall(ball));
             }
             ++i;
         }
         for (int j = 0; j < timers.Length; ++j)
         {
-            if (timers[j] < spawnTime) timers[j] += Time.deltaTime;
+            if (timers[j] < spawnTime)
+                timers[j] += Time.deltaTime;
             else if (!shieldBalls[j].activeSelf)
-            {
                 shieldBalls[j].SetActive(true);
-            }
         }
 	}
+
+    private IEnumerator disableBall(GameObject ball)
+    {
+        yield return new WaitForSeconds(0.1f);
+        ball.SetActive(false);
+    }
 }

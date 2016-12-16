@@ -40,14 +40,13 @@ public class Init : MonoBehaviour
 
     void Update()
     {
-        if (countDown >= 0)
-            text.text = countDown.ToString();
-        if (countDown == 0)
+        if (countDown > 0)  text.text = countDown.ToString();
+        else if (countDown == 0) {
             enableScripts(true);
-        else if (countDown == -1)
-            text.enabled = false;
-        else if (countDown == -2)
-            Destroy(gameObject);
+            text.text = "GO!";
+        }
+        else if (countDown == -1) text.enabled = false;
+        else if (countDown == -2) Destroy(gameObject);
     }
 
     void enableScripts(bool enabled)

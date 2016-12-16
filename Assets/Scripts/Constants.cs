@@ -3,18 +3,22 @@ using System.Collections;
 
 public static class Constants
 {
-
+    public static string menuScene = "Menu Scene";
+    public static string[] nameScenes = new string[2] { "Mapa 1", "Mapa 2" };
     public static string[] nameShips = new string[2] { "Feisar", "Millenium Falcon" };
+
+    public static float maxHealth = 100f;
+    public static float maxShield = 100f;
+
+    public static float[] speedShips = new float[2] { 136f, 156f };
 
     public static int CountDown = 3;
     public static float impactDamage = 30f;
+    public static float bonusShield = 20f;
+    public static float SphereSpawnTime = 3f;
     public static float[] collisionDamage = new float[2] {0.2f, 0.2f};
-    public static float[] speedShips = new float[2] { 136f, 156f };
-
     public static float shootDelay = 0.5f;
 
-    public static string[] nameScenes = new string[2] { "Mapa 1", "Mapa 2"};
-    public static string menuScene = "Menu Scene";
 
     public struct ShipInfo
     {

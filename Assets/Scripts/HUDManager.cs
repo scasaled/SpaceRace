@@ -16,12 +16,10 @@ public class HUDManager : MonoBehaviour
     public int totalLaps;
     public int totalShips;
 
-    private int lapTimeToShow;
 
     // Use this for initialization
     void Start()
     {
-        lapTimeToShow = 0;
 
         GameObject canvasObject = GameObject.FindGameObjectsWithTag("MainCanvas")[0];
         healthText = canvasObject.transform.FindChild("HealthBar/Health").GetComponent<Text>();

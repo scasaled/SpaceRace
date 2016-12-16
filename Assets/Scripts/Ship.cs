@@ -166,7 +166,6 @@ public class Ship : MonoBehaviour
             }
             else
             {
-
                 Ranking.addShip(gameObject);
                 GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
                 GameObject[] aux = new GameObject[enemies.Length + 1];

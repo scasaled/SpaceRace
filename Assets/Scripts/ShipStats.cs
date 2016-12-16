@@ -4,13 +4,12 @@ using System.Collections.Generic;
 
 public class ShipStats : MonoBehaviour
 {
-    private float maxHealth = 100f;
-    private float health = 100f;
-    private float maxShield = 100f;
-    private float shield = 100f;
+    private float maxHealth = Constants.maxHealth;
+    private float health = Constants.maxHealth;
+    private float maxShield = Constants.maxShield;
+    private float shield = Constants.maxShield;
 
     private int currentLap = 0;
-    private int currentPosition = 1;
 
     private float startTime = 0;
     private float stageTime = 0;
@@ -42,6 +41,11 @@ public class ShipStats : MonoBehaviour
     public float MaxHealth
     {
         get { return maxHealth; }
+    }
+
+    public float MaxShield
+    {
+        get { return maxShield; }
     }
 
     public void restartHealth()

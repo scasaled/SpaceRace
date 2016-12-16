@@ -29,7 +29,6 @@ public class PlayerShip : Ship
 
     public override void Update()
     {
-        print(transform.rotation);
         //Calcul Levitacio
         Vector3 midaNau = bc.size;
 
@@ -111,7 +110,7 @@ public class PlayerShip : Ship
             else if (speed < 0) speed = 0;
             rb.AddForce(transform.forward * speed);
             if (!boost) offsetCamera = Mathf.Lerp(offsetCamera, 0.0f, Time.deltaTime);
-            else offsetCamera = Mathf.Lerp(offsetCamera, 200.0f, Time.deltaTime*5.0f);
+            else offsetCamera = Mathf.Lerp(offsetCamera, 200.0f, Time.deltaTime * 5.0f);
         }
         waypointLap = waypointsLap[WPindexLapPointer];
 
@@ -140,15 +139,16 @@ public class PlayerShip : Ship
         if (other.gameObject.tag == "SpeedBoost")
         {
             boost = true;
-            speed = maxSpeed*1.7f;
+            speed = maxSpeed * 1.7f;
             rb.AddForce(transform.forward * speed);
+            other.gameObject.GetComponent<AudioSource>().Play();
         }
 
         if (other.gameObject.tag == "Sphere Shield")
         {
-            if (stats.Shield < 80.0f) stats.Shield += 20.0f;
-            else stats.Shield = 100.0f;
+            stats.Shield = Mathf.Min(stats.MaxShield, stats.Shield + Constants.bonusShield);
             hudManager.updateShield(stats.Shield);
+            other.gameObject.GetComponent<AudioSource>().Play();
         }
     }
 
@@ -168,7 +168,7 @@ public class PlayerShip : Ship
         base.Damage(healthDamage, shieldDamage);
         hudManager.updateHealth(stats.Health, stats.MaxHealth);
         hudManager.updateShield(stats.Shield);
-        if (stats.Health == 0f) tpShipPlayer();
+        if (stats.Health <= 0f) tpShipPlayer();
     }
 
     public override void LapPass()

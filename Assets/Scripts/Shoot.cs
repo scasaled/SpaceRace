@@ -38,9 +38,8 @@ public class Shoot : MonoBehaviour
         }
         else
         {
-            Vector3 midaNau = GetComponent<BoxCollider>().size;
             RaycastHit hit;
-            bool touch = Physics.Raycast(transform.position, new Vector3(0.0f,1.0f,0.0f), out hit, 1);
+            bool touch = Physics.Raycast(transform.position, transform.forward, out hit);
             if (touch && (hit.transform.tag == "Player" || hit.transform.tag == "Enemy") && (lastTime <= 0.0f))
             {
                 GameObject obj = (GameObject)Instantiate(shoot, transform.position, transform.rotation);
@@ -57,9 +56,8 @@ public class Shoot : MonoBehaviour
 
                 lastTime = Constants.shootDelay;
             }
-            Debug.DrawLine(transform.position, hit.point);
         }
-        
+
     }
 
 }
