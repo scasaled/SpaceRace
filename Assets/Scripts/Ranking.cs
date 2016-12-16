@@ -21,10 +21,7 @@ public class Ranking : MonoBehaviour {
 
     static private Text posPlayer;
     static private Text timePlayer;
-    static private Text ship1;
-    static private Text ship2;
-    static private Text ship3;
-    static private Text[] shipsText = new Text[3];
+    static private Text[] shipsText = new Text[4];
     static private List<Rank> results = new List<Rank>();
 
     // Use this for initialization
@@ -35,6 +32,7 @@ public class Ranking : MonoBehaviour {
         shipsText[0] = canvasObject.transform.FindChild("Canvas/Panel/Positions/Panel/Ships/Ship1").GetComponent<Text>();
         shipsText[1] = canvasObject.transform.FindChild("Canvas/Panel/Positions/Panel/Ships/Ship2").GetComponent<Text>();
         shipsText[2] = canvasObject.transform.FindChild("Canvas/Panel/Positions/Panel/Ships/Ship3").GetComponent<Text>();
+        shipsText[3] = canvasObject.transform.FindChild("Canvas/Panel/Positions/Panel/Ships/Ship4").GetComponent<Text>();
     }
 	
 	// Update is called once per frame

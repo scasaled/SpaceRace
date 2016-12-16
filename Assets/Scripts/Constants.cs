@@ -46,12 +46,12 @@ public static class Constants
 
     public static sceneInit[] scenes = new sceneInit[2]{
         new sceneInit(6,
-            new ShipInfo(nameShips[0],new Vector3(2446.001f, 1647.003f, 5180.001f), new Quaternion(0.1f, -1.0f, 0.0f, 0.1f)),
-            new ShipInfo(nameShips[1],new Vector3(2444.45f, 1647.229f, 5166.386f), new Quaternion(0.1f, -1.0f, 0.0f, 0.1f))
+            new ShipInfo(nameShips[0],new Vector3(2626.3f, 1627.5f, 5797.0f), Quaternion.Euler(new Vector3(-0.414f, -174.242f, 0.837f))),
+            new ShipInfo(nameShips[1],new Vector3(2629.125f, 1625.27f, 5827.995f), Quaternion.Euler(-0.4f, -174.287f, 0.965f))
         ),
         new sceneInit(3,
-            new ShipInfo(nameShips[0],new Vector3(3053f, 3667.9f, -1881.4f), new Quaternion(0f, -0.8f, -0.1f, 0.6f)),
-            new ShipInfo(nameShips[1],new Vector3(3063.9f, 3665.3f, -1869.4f), new Quaternion(0.1f, -0.8f, -0.1f, 0.5f))
+            new ShipInfo(nameShips[0],new Vector3(3306.004f, 3663.007f, -1834.989f), Quaternion.Euler(new Vector3(-2.84f, -116.317f, -9.745001f))),
+            new ShipInfo(nameShips[1],new Vector3(3324.0f, 3668.0f, -1846.0f), Quaternion.Euler(new Vector3(-2.0f, -114.5f, -10.0f)))
         )
     };
 

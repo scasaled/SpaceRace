@@ -22,13 +22,14 @@ public class PlayerShip : Ship
 
     private void updateStats()
     {
-        actualPos = 3;
+        actualPos = 4;
         hudManager.updateHealth(stats.Health, stats.MaxHealth);
         hudManager.updateShield(stats.Shield);
     }
 
     public override void Update()
     {
+        print(transform.rotation);
         //Calcul Levitacio
         Vector3 midaNau = bc.size;
 
