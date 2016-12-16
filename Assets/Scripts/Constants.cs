@@ -49,7 +49,7 @@ public static class Constants
     }
 
     public static sceneInit[] scenes = new sceneInit[2]{
-        new sceneInit(6,
+        new sceneInit(1,
             new ShipInfo(nameShips[0],new Vector3(2626.3f, 1627.5f, 5797.0f), Quaternion.Euler(new Vector3(-0.414f, -174.242f, 0.837f))),
             new ShipInfo(nameShips[1],new Vector3(2629.125f, 1625.27f, 5827.995f), Quaternion.Euler(-0.4f, -174.287f, 0.965f))
         ),

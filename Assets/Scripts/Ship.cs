@@ -161,8 +161,8 @@ public class Ship : MonoBehaviour
         {
             if (gameObject.tag != "Player")
             {
-                Ranking.addShip(gameObject);
                 Destroy(gameObject);
+                Ranking.addShip(gameObject, true);
             }
             else
             {

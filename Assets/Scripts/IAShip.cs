@@ -136,6 +136,13 @@ public class IAShip : Ship
         base.tpShip(lastWP.position, lastWP.rotation);
     }
 
+    public override void Damage(float damage)
+    {
+        base.Damage(damage);
+        if (stats.Health <= 0f) tpShipIA();
+    }
+
+
     public override void Damage(float healthDamage, float shieldDamage)
     {
         base.Damage(healthDamage, shieldDamage);

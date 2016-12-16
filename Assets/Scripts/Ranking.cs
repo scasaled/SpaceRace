@@ -8,6 +8,7 @@ public class Ranking : MonoBehaviour {
 
     public List<Transform> ships;
     static public GameObject cam;
+    public static int positionPlus = 0;
 
     private struct Rank
     {
@@ -51,7 +52,7 @@ public class Ranking : MonoBehaviour {
         {
             if (player.GetComponent<ShipStats>().CurrentLap > currLapP) ++auxPos;
             else if (player.GetComponent<ShipStats>().CurrentLap == currLapP && player.GetComponent<Ship>().WPindexLapPointer > indLapP) ++auxPos;
-        }
+        } else auxPos+= positionPlus;
         foreach (GameObject enem in enemies)
         {
             if (enem.name != id.name)
@@ -64,7 +65,7 @@ public class Ranking : MonoBehaviour {
         return auxPos;
     }
 
-    static public void addShip(GameObject ship)
+    static public void addShip(GameObject ship, bool sumPos = false)
     {
         Rank r = new Rank(ship.name);
         results.Add(r);
@@ -75,6 +76,8 @@ public class Ranking : MonoBehaviour {
             timePlayer.text = res;
             posPlayer.text = results.Count.ToString();
         }
+
+        if (sumPos) positionPlus++;
     }
 
     static public void active()
