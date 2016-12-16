@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Init : MonoBehaviour
+public class Init: MonoBehaviour
 {
     public Text text;
     private System.Timers.Timer timer;
@@ -10,6 +10,7 @@ public class Init : MonoBehaviour
 
     void Start()
     {
+        
         GameObject stats = (GameObject)Instantiate(Resources.Load("Stats", typeof(GameObject)));
         stats.name = "Stats";
 
@@ -46,7 +47,6 @@ public class Init : MonoBehaviour
             text.text = "GO!";
         }
         else if (countDown == -1) text.enabled = false;
-        else if (countDown == -2) Destroy(gameObject);
     }
 
     void enableScripts(bool enabled)
