@@ -45,7 +45,7 @@ public static class Constants
     }
 
     public static sceneInit[] scenes = new sceneInit[2]{
-        new sceneInit(1,
+        new sceneInit(6,
             new ShipInfo(nameShips[0],new Vector3(2446.001f, 1647.003f, 5180.001f), new Quaternion(0.1f, -1.0f, 0.0f, 0.1f)),
             new ShipInfo(nameShips[1],new Vector3(2444.45f, 1647.229f, 5166.386f), new Quaternion(0.1f, -1.0f, 0.0f, 0.1f))
         ),

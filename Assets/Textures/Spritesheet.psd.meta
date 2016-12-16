@@ -1,19 +1,22 @@
 fileFormatVersion: 2
 guid: ab739b6f3a747b14f884eea063b35ab5
-timeCreated: 1481815760
+timeCreated: 1481847594
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Spritesheet_0
-    21300002: Spritesheet_1
-    21300004: Spritesheet_2
-    21300006: Spritesheet_3
-    21300008: Spritesheet_4
-    21300010: Spritesheet_5
-    21300012: Spritesheet_6
-    21300014: Spritesheet_7
+    21300000: lap
+    21300002: of
+    21300004: time
+    21300006: vel
+    21300008: kmh
+    21300010: lap1
+    21300012: lap2
+    21300014: lap3
     21300016: Spritesheet_8
     21300018: Spritesheet_9
+    21300020: lap4
+    21300022: lap5
+    21300024: lap6
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -63,7 +66,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Spritesheet_0
+      name: lap
       rect:
         serializedVersion: 2
         x: 6
@@ -76,7 +79,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Spritesheet_1
+      name: of
       rect:
         serializedVersion: 2
         x: 315
@@ -89,7 +92,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Spritesheet_2
+      name: time
       rect:
         serializedVersion: 2
         x: 0
@@ -102,7 +105,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Spritesheet_3
+      name: vel
       rect:
         serializedVersion: 2
         x: 2
@@ -115,7 +118,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Spritesheet_4
+      name: kmh
       rect:
         serializedVersion: 2
         x: 6
@@ -128,7 +131,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Spritesheet_5
+      name: lap1
       rect:
         serializedVersion: 2
         x: 555
@@ -141,7 +144,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Spritesheet_6
+      name: lap2
       rect:
         serializedVersion: 2
         x: 555
@@ -154,7 +157,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Spritesheet_7
+      name: lap3
       rect:
         serializedVersion: 2
         x: 555
@@ -170,13 +173,13 @@ TextureImporter:
       name: Spritesheet_8
       rect:
         serializedVersion: 2
-        x: 543
-        y: 316
+        x: 155
+        y: 126
         width: 356
         height: 172
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 0, z: 35, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
@@ -185,11 +188,50 @@ TextureImporter:
         serializedVersion: 2
         x: 3
         y: 105
-        width: 161
+        width: 145
         height: 195
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: lap4
+      rect:
+        serializedVersion: 2
+        x: 556
+        y: 366
+        width: 434
+        height: 142
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: lap5
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 200
+        width: 432
+        height: 145
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: lap6
+      rect:
+        serializedVersion: 2
+        x: 556
+        y: 43
+        width: 435
+        height: 147
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 4, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     outline: []
