@@ -13,6 +13,7 @@ public class PlayerShip : Ship
     {
         base.Start();
         updateStats();
+        actualPos = 4;
     }
 
     public void setStats(GameObject stats)
@@ -22,9 +23,9 @@ public class PlayerShip : Ship
 
     private void updateStats()
     {
-        actualPos = 4;
         hudManager.updateHealth(stats.Health, stats.MaxHealth);
         hudManager.updateShield(stats.Shield);
+        hudManager.updatePos(actualPos);
     }
 
     public override void Update()
@@ -128,9 +129,8 @@ public class PlayerShip : Ship
         }
         int velocity = (int)rb.transform.InverseTransformDirection(rb.velocity).z;
         velocity /= 5;
+        updateStats();
         hudManager.updateSpeed(velocity);
-
-        hudManager.updatePos(actualPos);
     }
 
     void OnTriggerEnter(Collider other)
@@ -160,14 +160,11 @@ public class PlayerShip : Ship
     public void tpShipPlayer()
     {
         base.tpShip(lastWPLap.position, lastWPLap.rotation);
-        updateStats();
     }
 
     public override void Damage(float healthDamage, float shieldDamage)
     {
         base.Damage(healthDamage, shieldDamage);
-        hudManager.updateHealth(stats.Health, stats.MaxHealth);
-        hudManager.updateShield(stats.Shield);
         if (stats.Health <= 0f) tpShipPlayer();
     }
 

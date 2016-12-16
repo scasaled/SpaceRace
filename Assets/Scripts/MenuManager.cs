@@ -9,6 +9,8 @@ public class MenuManager : MonoBehaviour
     public Menu CurrentMenu;
     public Menu MapSelectionMenu;
 
+    public AudioSource beep;
+
     public List<Ship> ships = new List<Ship>();
     public List<Transform> bars = new List<Transform>();
 
@@ -65,6 +67,7 @@ public class MenuManager : MonoBehaviour
         if (CurrentMenu != null)
             CurrentMenu.IsOpen = false;
 
+        beep.Play();
         CurrentMenu = menu;
         CurrentMenu.IsOpen = true;
 
