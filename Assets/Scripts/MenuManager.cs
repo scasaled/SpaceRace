@@ -15,7 +15,7 @@ public class MenuManager : MonoBehaviour
     public List<Transform> bars = new List<Transform>();
 
     public static int selectedShip = 1;
-    public static int selectedMap = 1;
+    public static int selectedMap = 2;
 
     private struct bar
     {
